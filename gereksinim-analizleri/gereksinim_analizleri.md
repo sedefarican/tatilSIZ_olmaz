@@ -1,6 +1,6 @@
 # Gereksinim Dağılımları
 
-1. [İlknur'un Gereksinimleri](gereksinim-analizleri/ilknur_gereksinim_analizleri.md)
+1. [İlknur'un Gereksinimleri](ilknur_gereksinim_analizleri.md)
  
 2. [Sedef'in Gereksinimleri](gereksinim-analizleri/sedef_gereksinim_analizleri.md)
 
