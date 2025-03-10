@@ -1,4 +1,4 @@
-** Gereksinim Dağılımları**
+# Gereksinim Dağılımları
 
 1. [İlknur'un Gereksinimleri](gereksinim-analizleri/ilknur_gereksinim_analizleri.md)
  
