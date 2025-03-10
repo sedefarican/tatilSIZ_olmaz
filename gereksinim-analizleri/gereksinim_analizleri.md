@@ -11,13 +11,17 @@
 9. Giriş Yap (İlknur Ongur)
 10. Kayıt Ol (İlknur Ongur)
 11. Şifremi Unuttum (İlknur Ongur)
-12. Hesabı Güncelleme (İlknur Ongur)
-13. Hesabı Sil (İlknur Ongur)
-14. Hesaptan Çıkış Yap (İlknur Ongur)
+12. Hesabı Güncelleme (İlknur Ongur) 
+13. Hesabı Sil (İlknur Ongur) 
+14. Hesaptan Çıkış Yap (İlknur Ongur) 
 15. Sanal Asistan Oluşturma (İlknur Ongur)
-16. Fiyata Göre Filtreleme
-17. Ödeme Seçeneklerine Göre Filtreleme
-18. 
+16. Fiyata Göre Filtreleme (Sedef Arıcan)
+17. Ödeme Seçeneklerine Göre Filtreleme (Sedef Arıcan)
+18. Konaklama Tipine Göre Filtreleme (Sedef Arıcan)
+19. Konuma Göre Filtreleme (Sedef Arıcan)
+20. Konaklanan Yerin Özelliklerine Göre Filtreleme (Sedef Arıcan)
+21. Konaklanan Yeri Görüntüleme (Sedef Arıcan)
+22. Etkileşimli Harita (Sedef Arıcan)
 
 
 # Gereksinim Dağılımları
