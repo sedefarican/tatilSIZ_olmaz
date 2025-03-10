@@ -1,7 +1,7 @@
-# otelSİZ olmaz
+# tatilSİZ olmaz
 
 **Proje Tanımı:** Tatile çıkmak istiyorsun ama en iyi oteli en uygun fiyata nasıl bulacağını bilmiyor musun? İşte tam burada biz devreye giriyoruz! 
-HarikaTatiller, otelleri senin için tarar, fiyatları karşılaştırır ve en uygun seçeneği bulmanı sağlar. Tek tek siteleri gezmene, onlarca sekme açmana gerek yok! Sadece tarihlerini seç, bütçeni belirle, gerisini bize bırak. İster lüks bir tatil köyü, ister samimi bir butik otel... Sen nasıl bir konaklama arıyorsan, biz onu buluruz!
+tatilSİZ olmaz, otelleri senin için tarar, fiyatları karşılaştırır ve en uygun seçeneği bulmanı sağlar. Tek tek siteleri gezmene, onlarca sekme açmana gerek yok! Sadece tarihlerini seç, bütçeni belirle, gerisini bize bırak. İster lüks bir tatil köyü, ister samimi bir butik otel... Sen nasıl bir konaklama arıyorsan, biz onu buluruz!
 Ayrıca kullanıcı yorumlarını inceleyebilir, puanlamaları görebilir ve favorilerine eklediğin otelleri kaydedebilirsin. Hayalindeki tatili planlamak hiç bu kadar kolay olmamıştı! 
 Sen bavulunu hazırla, biz en iyi fiyatları senin için bulalım! 
 
