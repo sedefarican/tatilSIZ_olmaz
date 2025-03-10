@@ -15,4 +15,4 @@ Sen bavulunu hazırla, biz en iyi fiyatları senin için bulalım!
 
 **Proje Ekibi:** Sedef Arıcan, İlknur Ongur, Zeliha Küçükbayraktar 
 
-**1. Gereksinim Analizi**
+[1. Gereksinim Analizi](https://github.com/ilknurongur/Trivago/tree/main/gereksinim-analizleri)
