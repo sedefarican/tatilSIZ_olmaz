@@ -17,6 +17,6 @@ Sen bavulunu hazırla, biz en iyi fiyatları senin için bulalım!
 
 **1-[Gereksinim Analizleri](gereksinim-analizleri/gereksinim_analizleri.md)**
 
-**2-[Durum Diyagramı](durum-diyagrami)**
+**2-[Durum Diyagramı](durum-diyagrami.md)**
 
 **3-[Durum Senaryoları](durum-senaryoları.md)**
