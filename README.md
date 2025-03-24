@@ -17,4 +17,4 @@ Sen bavulunu hazırla, biz en iyi fiyatları senin için bulalım!
 
 **1-[Gereksinim Analizleri](gereksinim-analizleri/gereksinim_analizleri.md)**
 **2-[Durum Diyagramı](gereksinim-analizleri/gereksinim_analizleri.md)**
-**1-[Durum Senaryoları](kaynak/durum_senaryoları/Zeliha_DurumSenaryolari.pdf))**
+**1-[Durum Senaryoları](kaynak/durum_senaryoları))**
