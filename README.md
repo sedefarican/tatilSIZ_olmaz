@@ -19,4 +19,4 @@ Sen bavulunu hazırla, biz en iyi fiyatları senin için bulalım!
 
 **2-[Durum Diyagramı](gereksinim-analizleri/gereksinim_analizleri.md)**
 
-**1-[Durum Senaryoları](durum-senaryoları.md)**
+**3-[Durum Senaryoları](durum-senaryoları.md)**
