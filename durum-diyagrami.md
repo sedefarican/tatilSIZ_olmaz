@@ -1,2 +1,2 @@
-[](kaynak/durum_diyagrami.jpg)
+[.](kaynak/durum_diyagrami.jpg)
 
