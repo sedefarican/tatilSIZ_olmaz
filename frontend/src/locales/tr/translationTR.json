@@ -1,1 +1,140 @@
-{"welcome": "Hoş geldiniz"}
+{
+    "welcome": "Hoş geldiniz",
+    "language": "Dil",
+    "currency": "Para Birimi",
+    "check_in": "Giriş",
+    "check_out": "Çıkış",
+  
+    "header": {
+      "menu": "Menü",
+      "favorites": "Favoriler",
+      "login": "Giriş Yap",
+      "logout": "Çıkış Yap",
+      "updateAccount": "Hesabı Güncelle",
+      "deleteAccount": "Hesabı Sil",
+      "logoutConfirm": "Çıkış yapmak istediğinizden emin misiniz?",
+      "logoutSuccess": "Başarıyla çıkış yapıldı",
+      "languageAndCurrency": "Dil ve para birimi seçin",
+      "apply": "Uygula",
+      "yes": "Evet",
+      "no": "Hayır"
+    },
+  
+    "delete_account": {
+      "confirm_message": "Hesabınızı silmek istediğinizden emin misiniz?",
+      "success_message": "Hesabınız başarıyla silindi.",
+      "cancel_message": "İşlem iptal edildi. Ana sayfaya yönlendiriliyorsunuz..."
+    },
+  
+    "common": {
+      "yes": "Evet",
+      "no": "Hayır",
+      "select": "Seç"
+    },
+  
+    "favorites": {
+      "back": "Geri",
+      "account": "Hesabınız",
+      "remove": "Favorilerden Kaldır",
+      "add": "Favorilere Ekle",
+      "support": "Yardım ve destek",
+      "title": "Beğendikleriniz",
+      "list_label": "liste",
+      "link_fav": "Favoriler",
+      "language_currency": "TR · TL",
+      "new_list": "Yeni liste oluşturun"
+    },
+  
+    "forgot": {
+      "title": "Şifremi Unuttum",
+      "label": "Kayıtlı E-posta Adresiniz",
+      "invalid_email": "Geçerli bir e-posta adresi giriniz.",
+      "email_not_found": "Bu e-posta ile kayıtlı kullanıcı bulunamadı.",
+      "success_message": "Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.",
+      "send": "Gönder"
+    },
+  
+    "guest": {
+      "label": "Misafirler ve odalar",
+      "summary": "{{guests}} Misafir, {{rooms}} Oda.",
+      "adults": "Yetişkinler",
+      "children": "Çocuklar",
+      "rooms": "Oda",
+      "pet_friendly_title": "Evcil hayvan dostu",
+      "pet_friendly_note": "Sadece evcil hayvan dostu yerleri göster",
+      "reset": "SIFIRLA",
+      "apply": "Uygula"
+    },
+  
+    "login": {
+      "title": "Giriş Yap",
+      "email": "E-posta",
+      "password": "Şifre",
+      "forgot": "Şifremi Unuttum",
+      "button": "Giriş Yap",
+      "noAccount": "Hesabınız yok mu?",
+      "register": "Kayıt Ol",
+      "invalidInput": "Geçerli bir e-posta ve en az 6 karakterlik şifre girin.",
+      "wrongCredentials": "E-posta veya şifre yanlış."
+    },
+  
+    "register": {
+      "title": "Kayıt Ol",
+      "firstName": "Ad",
+      "lastName": "Soyad",
+      "email": "E-posta",
+      "password": "Şifre",
+      "button": "Kaydol",
+      "haveAccount": "Zaten hesabınız var mı?",
+      "login": "Giriş Yap",
+      "invalidInput": "Lütfen tüm alanları geçerli şekilde doldurun.",
+      "success": "✅ Kayıt başarılı! Ana sayfaya yönlendiriliyorsunuz..."
+    },
+  
+    "resultPage": {
+      "price": "Fiyat",
+      "setPriceRange": "Fiyat aralığını belirleyin",
+      "nightly": "Gecelik",
+      "total": "Toplam konaklama",
+      "feature": "Özellik",
+      "breakfast": "Ücretsiz Kahvaltı",
+      "spa": "Spa",
+      "wifi": "WiFi",
+      "parking": "Otopark",
+      "payment": "Ödeme",
+      "cash": "Peşin",
+      "card": "Kredi Kartı",
+      "cancelable": "İptal Edilebilir",
+      "stayType": "Konaklama",
+      "hotel": "Otel",
+      "villa": "Villa",
+      "apart": "Apart",
+      "bungalow": "Bungalov",
+      "location": "Konum",
+      "applyFilter": "Filtrele",
+      "placeholder": "burası backend tarafında doldurulacak."
+    },
+  
+    "search": {
+      "hotelLabel": "Otel",
+      "hotelPlaceholder": "Nereye?",
+      "searchButton": "Ara"
+    },
+  
+    "update": {
+      "title": "Hesap Bilgilerinizi Güncelleyin",
+      "firstName": "Ad",
+      "lastName": "Soyad",
+      "email": "E-posta",
+      "password": "Şifre",
+      "phone": "Telefon Numarası",
+      "save": "Kaydet",
+      "error": "Lütfen geçerli bilgileri girin.",
+      "success": "✅ Hesap bilgileriniz başarıyla güncellendi."
+    },
+  
+    "promo": {
+      "headline": "Sonraki otel konaklamanızdan %50 oranına varan kazanç elde edin",
+      "subtext": "100'den fazla siteden otel fiyatlarını karşılaştırıyoruz"
+    }
+  }

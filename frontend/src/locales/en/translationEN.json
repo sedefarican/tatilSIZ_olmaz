@@ -1,1 +1,140 @@
-{"welcome": "Hoş geldiniz"}
+{
+    "welcome": "Welcome",
+    "language": "Language",
+    "currency": "Currency",
+    "check_in": "Check-in",
+    "check_out": "Check-out",
+  
+    "header": {
+      "menu": "Menu",
+      "favorites": "Favorites",
+      "login": "Login",
+      "logout": "Logout",
+      "updateAccount": "Update Account",
+      "deleteAccount": "Delete Account",
+      "logoutConfirm": "Are you sure you want to log out?",
+      "logoutSuccess": "You have been successfully logged out",
+      "languageAndCurrency": "Select language and currency",
+      "apply": "Apply",
+      "yes": "Yes",
+      "no": "No"
+    },
+  
+    "delete_account": {
+      "confirm_message": "Are you sure you want to delete your account?",
+      "success_message": "Your account has been successfully deleted.",
+      "cancel_message": "Operation cancelled. Redirecting to homepage..."
+    },
+  
+    "common": {
+      "yes": "Yes",
+      "no": "No",
+      "select": "Select"
+    },
+  
+    "favorites": {
+      "back": "Back",
+      "account": "Your Account",
+      "remove": "Remove from Favorites",
+      "add": "Add to Favorites",
+      "support": "Help & Support",
+      "title": "Your Favorites",
+      "list_label": "list",
+      "link_fav": "Favorites",
+      "language_currency": "EN · USD",
+      "new_list": "Create New List"
+    },
+  
+    "forgot": {
+      "title": "Forgot Password",
+      "label": "Your Registered Email Address",
+      "invalid_email": "Please enter a valid email address.",
+      "email_not_found": "No user found with this email address.",
+      "success_message": "Password reset link has been sent to your email.",
+      "send": "Send"
+    },
+  
+    "guest": {
+      "label": "Guests and rooms",
+      "summary": "{{guests}} Guests, {{rooms}} Room(s).",
+      "adults": "Adults",
+      "children": "Children",
+      "rooms": "Room",
+      "pet_friendly_title": "Pet-friendly",
+      "pet_friendly_note": "Show only pet-friendly places",
+      "reset": "RESET",
+      "apply": "Apply"
+    },
+  
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgot": "Forgot Password?",
+      "button": "Login",
+      "noAccount": "Don't have an account?",
+      "register": "Register",
+      "invalidInput": "Please enter a valid email and a password with at least 6 characters.",
+      "wrongCredentials": "Incorrect email or password."
+    },
+  
+    "register": {
+      "title": "Register",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "button": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "login": "Login",
+      "invalidInput": "Please fill out all fields correctly.",
+      "success": "✅ Registration successful! Redirecting to homepage..."
+    },
+  
+    "resultPage": {
+      "price": "Price",
+      "setPriceRange": "Set Price Range",
+      "nightly": "Nightly",
+      "total": "Total stay",
+      "feature": "Feature",
+      "breakfast": "Free Breakfast",
+      "spa": "Spa",
+      "wifi": "WiFi",
+      "parking": "Parking",
+      "payment": "Payment",
+      "cash": "Cash",
+      "card": "Credit Card",
+      "cancelable": "Cancelable",
+      "stayType": "Stay Type",
+      "hotel": "Hotel",
+      "villa": "Villa",
+      "apart": "Apartment",
+      "bungalow": "Bungalow",
+      "location": "Location",
+      "applyFilter": "Apply Filters",
+      "placeholder": "This area will be populated by backend."
+    },
+  
+    "search": {
+      "hotelLabel": "Hotel",
+      "hotelPlaceholder": "Where to?",
+      "searchButton": "Search"
+    },
+  
+    "update": {
+      "title": "Update Your Account Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone Number",
+      "save": "Save",
+      "error": "Please enter valid information.",
+      "success": "✅ Your account information has been successfully updated."
+    },
+  
+    "promo": {
+      "headline": "Save up to 50% on your next hotel stay",
+      "subtext": "We compare hotel prices from over 100 sites"
+    }
+  }
