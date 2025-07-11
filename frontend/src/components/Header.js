@@ -11,6 +11,7 @@ export default function Header() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [logoutSuccess, setLogoutSuccess] = useState(false);
   const [showLangModal, setShowLangModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [selectedLang, setSelectedLang] = useState(localStorage.getItem('lang') || i18n.language);
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('currency') || 'TRY');
@@ -18,6 +19,11 @@ export default function Header() {
   useEffect(() => {
     i18n.changeLanguage(selectedLang);
   }, [selectedLang, i18n]);
+
+  useEffect(() => {
+    const status = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(status);
+  }, [location]); // sayfa değiştikçe kontrol et
 
   const toggleDropdown = () => {
     setDropdownOpen(prev => !prev);
@@ -27,9 +33,11 @@ export default function Header() {
   const confirmLogout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     setShowLogoutConfirm(false);
     setDropdownOpen(false);
     setLogoutSuccess(true);
+    setIsLoggedIn(false);
 
     setTimeout(() => {
       setLogoutSuccess(false);
@@ -51,8 +59,8 @@ export default function Header() {
   return (
     <header className="header">
       <Link to="/">
-    <img src="/assets/logo.png" alt="Siz Logo" className="site-logo" />
-  </Link>
+        <img src="/assets/logo.png" alt="Siz Logo" className="site-logo" />
+      </Link>
 
       <nav className="nav">
         <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
@@ -70,22 +78,26 @@ export default function Header() {
           🌐 {i18n.language.toUpperCase()} · {selectedCurrency}
         </button>
 
-        <Link to="/login" className="nav-link no-border">
-          🔐 {t('login.title')}
-        </Link>
+        {!isLoggedIn && (
+          <Link to="/login" className="nav-link no-border">
+            🔐 {t('login.title')}
+          </Link>
+        )}
 
-        <div className="menu-dropdown">
-          <span onClick={toggleDropdown} className="nav-link">
-            📂 {t('header.menu')} ▾
-          </span>
-          {dropdownOpen && (
-            <div className="dropdown-menu">
-              <Link to="/update-account">⚙️ {t('header.updateAccount')}</Link>
-              <Link to="/delete-account">🗑️ {t('header.deleteAccount')}</Link>
-              <button onClick={confirmLogout}>🚪 {t('header.logout')}</button>
-            </div>
-          )}
-        </div>
+        {isLoggedIn && (
+          <div className="menu-dropdown">
+            <span onClick={toggleDropdown} className="nav-link">
+              📂 {t('header.menu')} ▾
+            </span>
+            {dropdownOpen && (
+              <div className="dropdown-menu">
+                <Link to="/update-account">⚙️ {t('header.updateAccount')}</Link>
+                <Link to="/delete-account">🗑️ {t('header.deleteAccount')}</Link>
+                <button onClick={() => setShowLogoutConfirm(true)}>🚪 {t('header.logout')}</button>
+              </div>
+            )}
+          </div>
+        )}
       </nav>
 
       {showLangModal && (

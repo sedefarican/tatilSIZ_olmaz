@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export default function ForgotPasswordPage() {
   const { t } = useTranslation();
@@ -7,9 +8,8 @@ export default function ForgotPasswordPage() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (!email.includes('@')) {
       setError(t('forgot.invalid_email'));
@@ -17,14 +17,19 @@ export default function ForgotPasswordPage() {
       return;
     }
 
-    if (!storedUser || storedUser.email !== email) {
-      setError(t('forgot.email_not_found'));
-      setMessage('');
-      return;
-    }
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
 
-    setMessage(t('forgot.success_message'));
-    setError('');
+      setMessage(res.data.message);  // Backend'den gelen başarı mesajı
+      setError('');
+    } catch (err) {
+      if (err.response?.data?.message) {
+        setError(err.response.data.message);
+      } else {
+        setError(t('forgot.error_generic'));
+      }
+      setMessage('');
+    }
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -20,26 +21,41 @@ export default function RegisterPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = form;
 
+    // Basit frontend doğrulama
     if (!firstName || !lastName || !email.includes('@') || password.length < 6) {
       setErrorMsg(t('register.invalidInput'));
       setSuccessMsg('');
       return;
     }
 
-    const userData = { firstName, lastName, email, password };
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('isLoggedIn', 'true');
+    try {
+      // Backend'e kayıt isteği gönder
+      const res = await axios.post('http://localhost:5000/api/auth/register', {
+        firstName,
+        lastName,
+        email,
+        password
+      });
 
-    setSuccessMsg(t('register.success'));
-    setErrorMsg('');
+      setSuccessMsg(t('register.success'));
+      setErrorMsg('');
 
-    setTimeout(() => {
-      navigate('/');
-    }, 2000);
+      // Başarılı kayıt sonrası yönlendirme
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setErrorMsg('Bu e-mail zaten kayıtlı.');
+      } else {
+        setErrorMsg('Kayıt başarısız.');
+      }
+      setSuccessMsg('');
+    }
   };
 
   return (

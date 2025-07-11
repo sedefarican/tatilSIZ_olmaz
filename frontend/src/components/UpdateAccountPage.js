@@ -29,7 +29,7 @@ export default function UpdateAccountPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = form;
 
@@ -39,9 +39,30 @@ export default function UpdateAccountPage() {
       return;
     }
 
-    localStorage.setItem('user', JSON.stringify(form));
-    setSuccess(t('update.success'));
-    setError('');
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(t('update.success'));
+        setError('');
+        localStorage.setItem('user', JSON.stringify(form));
+      } else {
+        setError(data.message || 'Güncelleme başarısız');
+        setSuccess('');
+      }
+    } catch (err) {
+      console.error('Hesap güncelleme hatası:', err);
+      setError('Sunucu hatası');
+      setSuccess('');
+    }
   };
 
   return (

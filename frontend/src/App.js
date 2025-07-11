@@ -13,8 +13,10 @@ import UpdateAccountPage from './components/UpdateAccountPage';
 import DeleteAccountPage from './components/DeleteAccountPage';
 import AddtoFavorites from './components/AddtoFavorites';
 import RemoveFavorites from './components/RemoveFavorites';
-import FloatingAssistant from './components/FloatingAssistant'; 
+import FloatingAssistant from './components/FloatingAssistant';
 import Footer from './components/Footer';
+import PrivateRoute from './routes/PrivateRoute';
+
 import './App.css';
 
 function App() {
@@ -38,14 +40,51 @@ function App() {
             }
           />
           <Route path="/results" element={<ResultPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/update-account" element={<UpdateAccountPage />} />
-          <Route path="/delete-account" element={<DeleteAccountPage />} />
-          <Route path="/remove-from-favorites" element={<RemoveFavorites />} />
-          <Route path="/add-to-favorites" element={<AddtoFavorites />} />
+
+          {/* Giriş yapmış kullanıcılar için korumalı sayfalar */}
+          <Route
+            path="/favorites"
+            element={
+              <PrivateRoute>
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/update-account"
+            element={
+              <PrivateRoute>
+                <UpdateAccountPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/delete-account"
+            element={
+              <PrivateRoute>
+                <DeleteAccountPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add-to-favorites"
+            element={
+              <PrivateRoute>
+                <AddtoFavorites />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/remove-from-favorites"
+            element={
+              <PrivateRoute>
+                <RemoveFavorites />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </main>
 

@@ -1,6 +1,8 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -10,7 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email.includes('@') || password.length < 6) {
@@ -18,12 +20,25 @@ export default function LoginPage() {
       return;
     }
 
-    if (email === 'demo@demo.com' && password === '123456') {
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password
+      });
+
+      // ✅ Başarılı giriş → veriyi localStorage’a kaydet
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('user', JSON.stringify({ email }));
-      navigate('/');
-    } else {
-      setErrorMsg(t('login.wrongCredentials'));
+
+      setErrorMsg('');
+      navigate('/'); // ✅ Anasayfaya yönlendir
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setErrorMsg(t('login.wrongCredentials'));
+      } else {
+        setErrorMsg(t('login.error') || 'Giriş başarısız.');
+      }
     }
   };
 
