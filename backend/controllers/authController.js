@@ -99,5 +99,60 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const updateAccount = async (req, res) => {
+  const { email, firstName, lastName, password, phone } = req.body;
 
-module.exports = { register, login, forgotPassword};
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ message: 'Geçersiz e-posta adresi.' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Kullanıcı bulunamadı.' });
+    }
+
+    // Şifreyi güncelliyorsan hashle
+    const hashedPassword = password.length >= 6
+      ? await bcrypt.hash(password, 10)
+      : user.password;
+
+    // Güncelleme işlemi
+    user.firstName = firstName || user.firstName;
+    user.lastName = lastName || user.lastName;
+    user.password = hashedPassword;
+    user.phone = phone || user.phone;
+
+    await user.save();
+
+    res.status(200).json({ message: 'Hesap başarıyla güncellendi.' });
+  } catch (err) {
+    console.error('Hesap güncelleme hatası:', err.message);
+    res.status(500).json({ message: 'Sunucu hatası.' });
+  }
+};
+
+const deleteAccount = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ message: 'Geçersiz e-posta adresi.' });
+  }
+
+  try {
+    const user = await User.findOneAndDelete({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Kullanıcı bulunamadı.' });
+    }
+
+    res.status(200).json({ message: 'Hesap silindi.' });
+  } catch (err) {
+    console.error('Hesap silme hatası:', err.message);
+    res.status(500).json({ message: 'Sunucu hatası.' });
+  }
+};
+
+
+module.exports = { register, login, forgotPassword, updateAccount, deleteAccount};
