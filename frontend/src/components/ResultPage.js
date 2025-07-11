@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import SearchBar from './SearchBar';
 import MapView from './MapView';
+import SearchBar from './SearchBar';
 
 export default function ResultPage() {
   const { t } = useTranslation();

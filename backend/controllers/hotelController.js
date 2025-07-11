@@ -36,7 +36,9 @@ const getHotels = async (req, res) => {
       }
     });
 
+
     const hotelsRaw = response.data?.data?.data;
+    
 
     const hotels = Array.isArray(hotelsRaw) ? hotelsRaw : [];
 
