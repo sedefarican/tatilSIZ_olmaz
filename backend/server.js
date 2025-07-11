@@ -1,38 +1,41 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const cors = require('cors'); // CORS'u en başta çağır
+const cors = require('cors');
+
 const authRoutes = require('./routes/authRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
+const hotelRoutes = require('./routes/hotelRoutes');
+
+// .env dosyasını yükle
 dotenv.config();
 
 const app = express();
 
-// CORS middleware’i önce tanımla ✅
+// Middleware'ler
 app.use(cors());
-
-// JSON verileri parse etsin diye body parser
 app.use(express.json());
+
+// Route'lar
 app.use('/api/auth', authRoutes);
+app.use('/api/favorites', favoriteRoutes);
+app.use('/api/hotels', hotelRoutes);
+
+// Test endpoint
+app.get('/', (req, res) => {
+  res.send('Backend sunucu çalışıyor');
+});
 
 // MongoDB bağlantısı
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB’ye başarıyla bağlanıldı'))
-.catch(err => console.error('MongoDB bağlantı hatası: ', err));
+.then(() => console.log('✅ MongoDB’ye başarıyla bağlanıldı'))
+.catch(err => console.error('❌ MongoDB bağlantı hatası:', err));
 
-// Route’lar
-const hotelRoutes = require('./routes/hotelRoutes');
-app.use('/api/hotels', hotelRoutes);
-
-// Basit test endpoint
-app.get('/', (req, res) => {
-  res.send('Backend sunucu çalışıyor');
-});
-
-// Sunucuyu başlat
+// Sunucu başlat
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-  console.log(`Backend sunucu ${port} portunda çalışıyor`);
+  console.log(`🚀 Backend sunucu ${port} portunda çalışıyor`);
 });
