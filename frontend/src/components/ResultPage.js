@@ -57,7 +57,7 @@ export default function ResultPage() {
   };
 
   useEffect(() => {
-    fetchHotels(); // İlk açıldığında çalışsın
+    fetchHotels();
   }, []);
 
   const applyPriceFilter = () => {
@@ -65,7 +65,7 @@ export default function ResultPage() {
   };
 
   const handleFullFilter = () => {
-    fetchHotels(); // Tüm filtreleri gönder
+    fetchHotels();
     setShowFilterResultBox(true);
   };
 
@@ -73,9 +73,7 @@ export default function ResultPage() {
     <div className="results-page-column">
       <SearchBar hotel={hotel} checkIn={checkIn} checkOut={checkOut} guests="2 Misafir, 1 Oda" />
 
-      {/* FİLTRE BAR */}
       <div className="filter-bar">
-        {/* Fiyat filtresi */}
         <div className="filter-block price-filter-wrapper">
           <label>{t('resultPage.price')}</label>
           <div className="fake-input" onClick={() => setShowPricePopup(!showPricePopup)}>
@@ -104,7 +102,6 @@ export default function ResultPage() {
           )}
         </div>
 
-        {/* Diğer filtreler */}
         <div className="filter-block">
           <label>{t('resultPage.feature')}</label>
           <select value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -153,7 +150,6 @@ export default function ResultPage() {
         </div>
       </div>
 
-      {/* SONUÇLAR */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginTop: '24px' }}>
         <div style={{
           width: '50%', maxHeight: '500px', overflowY: 'auto',
@@ -199,7 +195,7 @@ export default function ResultPage() {
             hotels={hotels.slice(0, 5).map(h => ({
               name: h.title,
               price: h.priceForDisplay || '',
-              coords: [36.86, 30.62]
+              coords: [36.86, 30.62] // dummy coord
             }))}
           />
         </div>
