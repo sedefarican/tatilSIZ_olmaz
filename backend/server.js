@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors'); // CORS'u en başta çağır
-
+const authRoutes = require('./routes/authRoutes');
 dotenv.config();
 
 const app = express();
@@ -12,6 +12,7 @@ app.use(cors());
 
 // JSON verileri parse etsin diye body parser
 app.use(express.json());
+app.use('/api/auth', authRoutes);
 
 // MongoDB bağlantısı
 mongoose.connect(process.env.MONGO_URI, {

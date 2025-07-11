@@ -18,21 +18,46 @@ export default function ResultPage() {
   const [stayType, setStayType] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [showPricePopup, setShowPricePopup] = useState(false);
-  const [showFilterResultBox, setShowFilterResultBox] = useState(true);
+  const [showFilterResultBox, setShowFilterResultBox] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const cities = [/* şehir listesi burada aynı kalıyor */];
+  const cities = [
+    'Adana', 'Adıyaman', 'Afyonkarahisar', 'Ağrı', 'Amasya', 'Ankara', 'Antalya',
+    'Artvin', 'Aydın', 'Balıkesir', 'Bilecik', 'Bingöl', 'Bitlis', 'Bolu',
+    'Burdur', 'Bursa', 'Çanakkale', 'Çankırı', 'Çorum', 'Denizli', 'Diyarbakır',
+    'Edirne', 'Elazığ', 'Erzincan', 'Erzurum', 'Eskişehir', 'Gaziantep',
+    'Giresun', 'Gümüşhane', 'Hakkâri', 'Hatay', 'Isparta', 'Mersin', 'İstanbul',
+    'İzmir', 'Kars', 'Kastamonu', 'Kayseri', 'Kırklareli', 'Kırşehir', 'Kocaeli',
+    'Konya', 'Kütahya', 'Malatya', 'Manisa', 'Kahramanmaraş', 'Mardin',
+    'Muğla', 'Muş', 'Nevşehir', 'Niğde', 'Ordu', 'Rize', 'Sakarya', 'Samsun',
+    'Siirt', 'Sinop', 'Sivas', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli',
+    'Şanlıurfa', 'Uşak', 'Van', 'Yozgat', 'Zonguldak', 'Aksaray', 'Bayburt',
+    'Karaman', 'Kırıkkale', 'Batman', 'Şırnak', 'Bartın', 'Ardahan', 'Iğdır',
+    'Yalova', 'Karabük', 'Kilis', 'Osmaniye', 'Düzce'
+  ];
+
+  const fetchHotels = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get('http://localhost:5000/api/hotels', {
+        params: {
+          minPrice,
+          maxPrice,
+          stayType,
+          location: selectedCity,
+          checkIn,
+          checkOut,
+        },
+      });
+      setHotels(res.data.data);
+    } catch (err) {
+      console.error('Otel verisi alınamadı:', err);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchHotels = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/hotels');
-        setHotels(res.data.data);
-      } catch (err) {
-        console.error('Otel verisi alınamadı:', err);
-      }
-    };
-
-    fetchHotels();
+    fetchHotels(); // İlk açıldığında çalışsın
   }, []);
 
   const applyPriceFilter = () => {
@@ -40,20 +65,17 @@ export default function ResultPage() {
   };
 
   const handleFullFilter = () => {
+    fetchHotels(); // Tüm filtreleri gönder
     setShowFilterResultBox(true);
   };
 
   return (
     <div className="results-page-column">
-      <SearchBar
-        hotel={hotel}
-        checkIn={checkIn}
-        checkOut={checkOut}
-        guests="2 Misafir, 1 Oda"
-      />
+      <SearchBar hotel={hotel} checkIn={checkIn} checkOut={checkOut} guests="2 Misafir, 1 Oda" />
 
+      {/* FİLTRE BAR */}
       <div className="filter-bar">
-        {/* Filtre kutuları */}
+        {/* Fiyat filtresi */}
         <div className="filter-block price-filter-wrapper">
           <label>{t('resultPage.price')}</label>
           <div className="fake-input" onClick={() => setShowPricePopup(!showPricePopup)}>
@@ -82,6 +104,7 @@ export default function ResultPage() {
           )}
         </div>
 
+        {/* Diğer filtreler */}
         <div className="filter-block">
           <label>{t('resultPage.feature')}</label>
           <select value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -130,19 +153,17 @@ export default function ResultPage() {
         </div>
       </div>
 
-      {/* Otel Kartları + Harita */}
+      {/* SONUÇLAR */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginTop: '24px' }}>
         <div style={{
-          width: '50%',
-          maxHeight: '500px',
-          overflowY: 'auto',
-          backgroundColor: '#fff',
-          boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-          borderRadius: '8px',
-          padding: '16px'
+          width: '50%', maxHeight: '500px', overflowY: 'auto',
+          backgroundColor: '#fff', boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+          borderRadius: '8px', padding: '16px'
         }}>
-          {hotels.length === 0 ? (
+          {loading ? (
             <p>Yükleniyor...</p>
+          ) : hotels.length === 0 ? (
+            <p>Sonuç bulunamadı.</p>
           ) : (
             hotels.slice(0, 5).map((hotel, index) => {
               const image = hotel.cardPhotos?.[0]?.sizes?.urlTemplate?.replace('{width}', '100').replace('{height}', '100');
@@ -160,12 +181,9 @@ export default function ResultPage() {
                       <strong>{hotel.priceForDisplay || 'Fiyat bilgisi yok'}</strong>
                     </p>
                     <button style={{
-                      marginTop: '8px',
-                      padding: '6px 12px',
-                      backgroundColor: '#0071c2',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px'
+                      marginTop: '8px', padding: '6px 12px',
+                      backgroundColor: '#0071c2', color: 'white',
+                      border: 'none', borderRadius: '4px'
                     }}>
                       Fiyatları Görün
                     </button>
