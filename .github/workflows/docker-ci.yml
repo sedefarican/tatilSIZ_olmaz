@@ -1,31 +1,29 @@
-name: Backend CI/CD
+name: Build and Push Docker Image
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  build-and-test:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name:  Reposityoyu çek
-        uses: actions/checkout@v3
+    - name: Checkout the code
+      uses: actions/checkout@v3
 
-      - name:  Docker kurulu mu kontrol et
-        run: docker --version
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
-      - name:  Docker imajı oluştur
-        run: docker build -t backend-ci ./backend
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name:  Konteyneri çalıştır 
-        run: docker run -d -p 5000:5000 --name backend-container backend-ci
-
-      - name:  Uygulama çalışıyor mu kontrol et 
-        run: |
-          sleep 5
-          curl --fail http://localhost:5000 || exit 1
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/tatilsizolmaz-backend:latest
