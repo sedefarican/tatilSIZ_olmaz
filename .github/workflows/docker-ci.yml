@@ -26,4 +26,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/tatilsizolmaz-backend:latest
+        tags: ilknurongur/tatilsizolmaz-backend:latest
