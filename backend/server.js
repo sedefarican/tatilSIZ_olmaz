@@ -6,7 +6,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const favoriteRoutes = require('./routes/favoriteRoutes');
 const hotelRoutes = require('./routes/hotelRoutes');
-
+const currencyRoutes = require('./routes/currencyRoutes');
 // .env dosyasını yükle
 dotenv.config();
 
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/hotels', hotelRoutes);
+app.use('/api/currency', currencyRoutes);
 
 // Test endpoint
 app.get('/', (req, res) => {
