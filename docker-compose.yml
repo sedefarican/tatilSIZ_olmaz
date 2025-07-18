@@ -11,6 +11,12 @@ services:
       MONGO_INITDB_DATABASE: trivagoDB
     volumes:
       - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --eval 'db.runCommand({ping: 1})' --quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
@@ -29,24 +35,36 @@ services:
     depends_on:
       - zookeeper
     ports:
-      # Bu port, host makinenizden (örneğin test için) Kafka'ya erişmek için kullanılır.
       - "29092:29092"
-      # Bu port, aynı docker network'ündeki diğer servislerin (backend gibi) erişimi içindir.
-      # Host'a publish etmeye gerek yok ama görsel olarak kalabilir.
       - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      # KAFKA'YA ERİŞİM ADRESLERİNİ TANIMLIYORUZ
-      # 1. PLAINTEXT://kafka:9092 -> Docker içindeki 'backend' gibi diğer servisler bu adresi kullanacak.
-      # 2. OUTSIDE://localhost:29092 -> Bilgisayarınızdan (host) Kafka'ya bağlanmak için bu adresi kullanacaksınız.
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,OUTSIDE://localhost:29092
-      # HATANIZI GİDEREN EN ÖNEMLİ AYAR: Her listener'a hangi güvenlik protokolünü kullanacağını söylüyoruz.
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      # Tek node'lu bir Kafka kurduğumuz için bu ayar zorunludur.
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    healthcheck:
+      test: ["CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  redis: # Yeni Redis servisi eklendi
+    image: redis:latest
+    container_name: tatilsiz-redis
+    restart: always
+    ports:
+      - '6379:6379'
+    healthcheck: # Redis için healthcheck eklendi
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - redis_data:/data # Verilerin kalıcı olması için volume eklendi
 
   backend:
     build: ./backend
@@ -54,13 +72,17 @@ services:
     restart: always
     ports:
       - '5000:5000'
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/trivagoDB
-      # Bu ayar DOĞRU. Backend, Kafka'ya docker network'ü üzerinden bu adresle ulaşacak.
-      - KAFKA_BROKER=kafka:9092
+    env_file:
+      - ./backend/.env
     depends_on:
-      - mongo
-      - kafka
+      mongo:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      redis: # Backend'in Redis'e bağımlılığı eklendi
+        condition: service_healthy
+    command: ["node", "server.js"]
 
 volumes:
   mongodb_data:
+  redis_data: # Yeni Redis volume'u eklendi
