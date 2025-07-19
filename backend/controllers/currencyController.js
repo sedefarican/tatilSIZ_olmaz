@@ -1,11 +1,10 @@
-// currencyController.js DOSYASININ YENİ VE TAM HALİ
 
 const axios = require('axios');
 const xml2js = require('xml2js');
 
 let cachedRates = null;
 let lastFetchTime = 0;
-// Cache süresini 1 saat olarak ayarlıyoruz (milisaniye cinsinden)
+// Cache süresini 1 saat 
 const CACHE_DURATION = 60 * 60 * 1000;
 
 async function getRatesLogic() {
