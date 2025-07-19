@@ -22,3 +22,7 @@ Sen bavulunu hazırla, biz en iyi fiyatları senin için bulalım!
 **3-[Durum Senaryoları](durum-senaryoları.md)**
 
 **4-[Frontend](Frontend.md)**
+
+**5-[Backend](Backend.md)**
+
+**6-[Video Sunum](Video.md)**

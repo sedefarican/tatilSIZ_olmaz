@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { CurrencyContext } from '../context/CurrencyContext';
 
 export default function Header() {
   const { t, i18n } = useTranslation();
+  const { currency, setCurrency } = useContext(CurrencyContext);
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -12,18 +15,14 @@ export default function Header() {
   const [logoutSuccess, setLogoutSuccess] = useState(false);
   const [showLangModal, setShowLangModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const [selectedLang, setSelectedLang] = useState(localStorage.getItem('lang') || i18n.language);
-  const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('currency') || 'TRY');
-
-  useEffect(() => {
-    i18n.changeLanguage(selectedLang);
-  }, [selectedLang, i18n]);
+  
+  const [tempLang, setTempLang] = useState(i18n.language);
+  const [tempCurrency, setTempCurrency] = useState(currency);
 
   useEffect(() => {
     const status = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(status);
-  }, [location]); // sayfa değiştikçe kontrol et
+  }, [location]); 
 
   const toggleDropdown = () => {
     setDropdownOpen(prev => !prev);
@@ -48,9 +47,9 @@ export default function Header() {
   const cancelLogout = () => setShowLogoutConfirm(false);
 
   const handleLanguageApply = () => {
-    i18n.changeLanguage(selectedLang);
-    localStorage.setItem('lang', selectedLang);
-    localStorage.setItem('currency', selectedCurrency);
+    i18n.changeLanguage(tempLang);
+    setCurrency(tempCurrency);
+    localStorage.setItem('lang', tempLang);
     setShowLangModal(false);
   };
 
@@ -66,16 +65,19 @@ export default function Header() {
         <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
           🏠 {t('Home')}
         </Link>
-
         <Link to="/favorites" className={`nav-link ${isActive('/favorites') ? 'active' : ''}`}>
           ❤️ {t('favorites.link_fav')}
         </Link>
 
         <button
-          onClick={() => setShowLangModal(true)}
+          onClick={() => {
+            setTempLang(i18n.language);
+            setTempCurrency(currency);
+            setShowLangModal(true);
+          }}
           className="lang-button"
         >
-          🌐 {i18n.language.toUpperCase()} · {selectedCurrency}
+          🌐 {i18n.language.toUpperCase()} · {currency}
         </button>
 
         {!isLoggedIn && (
@@ -109,13 +111,13 @@ export default function Header() {
             </div>
             <div className="modal-content">
               <label>{t('language')}</label>
-              <select value={selectedLang} onChange={(e) => setSelectedLang(e.target.value)}>
+              <select value={tempLang} onChange={(e) => setTempLang(e.target.value)}>
                 <option value="tr">Türkçe</option>
                 <option value="en">English</option>
               </select>
 
               <label>{t('currency')}</label>
-              <select value={selectedCurrency} onChange={(e) => setSelectedCurrency(e.target.value)}>
+              <select value={tempCurrency} onChange={(e) => setTempCurrency(e.target.value)}>
                 <option value="TRY">TRY - Türk Lirası</option>
                 <option value="USD">USD - US Dollar</option>
                 <option value="EUR">EUR - Euro</option>
@@ -126,6 +128,7 @@ export default function Header() {
         </div>
       )}
 
+      {/* --- EKSİK OLAN KISIMLAR BURADA --- */}
       {showLogoutConfirm && (
         <div className="logout-confirm">
           <p>{t('header.logoutConfirm')}</p>
@@ -139,6 +142,8 @@ export default function Header() {
       {logoutSuccess && (
         <div className="logout-message">{t('header.logoutSuccess')}</div>
       )}
+      {/* --- EKSİK KISIMLARIN SONU --- */}
+      
     </header>
   );
 }

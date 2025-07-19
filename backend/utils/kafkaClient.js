@@ -1,4 +1,3 @@
-// utils/kafkaClient.js
 const { Kafka } = require('kafkajs');
 
 let producer = null;

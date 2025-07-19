@@ -1,3 +1,4 @@
+// favoriteRoutes.js DOSYASININ YENİ VE TAM İÇERİĞİ
 const express = require('express');
 const router = express.Router();
 const {
@@ -6,8 +7,13 @@ const {
   removeFavorite
 } = require('../controllers/favoriteController');
 
-router.get('/', getFavorites);         // GET /api/favorites?userEmail=...
-router.post('/add', addFavorite);      // POST /api/favorites/add
-router.delete('/remove', removeFavorite); // DELETE /api/favorites/remove
+// GET /api/favorites -> Kullanıcının tüm favorilerini getirir (Query ile)
+router.get('/', getFavorites);
+
+// POST /api/favorites -> Yeni bir favori ekler (Body ile)
+router.post('/', addFavorite);
+
+// DELETE /api/favorites/:hotelId -> Belirli bir oteli favorilerden siler (Params ve Body ile)
+router.delete('/:hotelId', removeFavorite);
 
 module.exports = router;

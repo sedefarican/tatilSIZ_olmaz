@@ -1,71 +1,160 @@
-const axios = require('axios');
-require('dotenv').config();
-const { sendHotelSearchEvent } = require('../kafka/producer');
+
+require("dotenv").config();
+const axios = require("axios");
+const { getRatesLogic } = require("./currencyController");
+const mockDataApiResponse = require("../mock-hotels.json");
+
+const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
 const getHotels = async (req, res) => {
   try {
-    const {
-      minPrice = 0,
-      maxPrice = Infinity,
-      stayType = '',
-      location: rawLocation = 'Antalya',
-      checkIn = '2025-08-01',
-      checkOut = '2025-08-07'
+    let {
+      minPrice = 50,
+      maxPrice = 50000,
+      currency = "TRY",
+      location: rawLocation = "Antalya",
+      checkIn,
+      checkOut,
+      lang = "tr",
     } = req.query;
-    
-    const location = rawLocation.charAt(0).toUpperCase() + rawLocation.slice(1).toLowerCase();
 
-    const geoIdMap = {
-        'İstanbul': '293974', 'Ankara': '298656', 'İzmir': '298006', 'Antalya': '298484',
+    const exchangeRates = await getRatesLogic();
+    const usdToTryRate = exchangeRates.USD;
+    const eurToTryRate = exchangeRates.EUR;
+
+    // 2. Fiyatları işleyen ve istenen para birimine çeviren yardımcı fonksiyon
+    const processAndConvertPrices = (hotels) => {
+      return hotels.map((hotel) => {
+        const priceStr = hotel.priceForDisplay;
+        const priceUsd =
+          parseInt(String(priceStr).replace(/[^\d]/g, ""), 10) || 0;
+
+        let displayPriceText = "Fiyat bilgisi yok";
+        let finalPriceValue = 0; // Bu, filtreleme için kullanılacak olan sayısal değerdir.
+
+        if (priceUsd > 0) {
+          if (currency.toUpperCase() === "TRY") {
+            const priceTry = Math.round(priceUsd * usdToTryRate);
+            finalPriceValue = priceTry;
+            displayPriceText = `₺${priceTry.toLocaleString("tr-TR")}`;
+          } else if (currency.toUpperCase() === "EUR") {
+            const usdToEurRate = usdToTryRate / eurToTryRate;
+            const priceEur = Math.round(priceUsd * usdToEurRate);
+            finalPriceValue = priceEur;
+            displayPriceText = `€${priceEur.toLocaleString("de-DE")}`;
+          } else {
+            finalPriceValue = priceUsd;
+            displayPriceText = `$${priceUsd.toLocaleString("en-US")}`;
+          }
+        }
+        return {
+          ...hotel,
+          priceValue: finalPriceValue,
+          priceForDisplay: displayPriceText,
+        };
+      });
     };
-    const geoId = geoIdMap[location] || '298484';
 
-    const response = await axios.get('https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchHotels', {
-      params: { geoId, checkIn, checkOut, adults: '2', rooms: '1' },
-      headers: { 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY, 'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com' }
-    });
+    // 3. Fiyat aralığına göre filtreleyen yardımcı fonksiyon
+    const applyFilters = (hotels) => {  
+      return hotels.filter((hotel) => {
+        // Fiyatı olmayanları, bir fiyat filtresi aktifse gösterme.
+        if (hotel.priceValue === 0 && (minPrice > 0 || maxPrice < 50000)) {
+          return false;
+        }
+        // Fiyat aralığı kontrolü
+        if (hotel.priceValue < minPrice || hotel.priceValue > maxPrice) {
+          return false;
+        }
+        // Buraya ileride başka filtreler (özellik, ödeme vs) eklenebilir.
+        return true;
+      });
+    };
 
-    const hotelsRaw = response.data?.data?.data;
-    const hotels = Array.isArray(hotelsRaw) ? hotelsRaw : [];
 
-    console.log(`[DEBUG] TripAdvisor'dan "${location}" için ${hotels.length} adet ham otel verisi alındı.`);
+    if (IS_DEV_MODE) {
+      console.log(
+        `✅ [DEV MODU] API çağrısı atlandı. İstenen Dil: ${lang}, Kur: ${currency}`
+      );
+      const hotelsRaw = mockDataApiResponse.data?.data;
+      if (!Array.isArray(hotelsRaw) || hotelsRaw.length === 0) {
+        return res.status(200).json({ data: [] });
+      }
 
-    if (!hotels.length) {
+      // Sahte veriyi al, fiyatlarını işle ve çevir.
+      const hotelsWithConvertedPrices = processAndConvertPrices(hotelsRaw);
+      // Fiyatı işlenmiş sahte veriyi, filtreden geçir.
+      const filteredHotels = applyFilters(hotelsWithConvertedPrices);
+
+      console.log(
+        `[DEV MODU] ${filteredHotels.length} adet filtrelenmiş sahte otel gönderildi.`
+      );
+      return res.status(200).json({ data: filteredHotels });
+    }
+
+  
+    console.log(
+      `[INFO] GERÇEK VERİ MODU AKTİF. İstenen Dil: ${lang}, Kur: ${currency}`
+    );
+
+    if (!checkIn || !checkOut) {
+      const today = new Date();
+      checkIn = today.toISOString().slice(0, 10);
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      checkOut = tomorrow.toISOString().slice(0, 10);
+    }
+
+    const location =
+      rawLocation.charAt(0).toUpperCase() + rawLocation.slice(1).toLowerCase();
+    const geoIdMap = {
+      İstanbul: "293974",
+      Ankara: "298656",
+      İzmir: "298006",
+      Antalya: "298484",
+    };
+    const geoId = geoIdMap[location];
+    if (!geoId) return res.status(200).json({ data: [] });
+
+    const response = await axios.get(
+      "https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchHotels",
+      {
+        params: { geoId, checkIn, checkOut, adults: "2", rooms: "1", lang },
+        headers: {
+          "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
+          "X-RapidAPI-Host": "tripadvisor16.p.rapidapi.com",
+        },
+      }
+    );
+
+    const hotelsRawFromApi = response.data?.data?.data;
+    if (!Array.isArray(hotelsRawFromApi) || hotelsRawFromApi.length === 0) {
       return res.status(200).json({ data: [] });
     }
-    
-    // ---- EN KRİTİK DEĞİŞİKLİK BURADA ----
-    // TÜM FİLTRELEME LOGIC'INI DEVRE DIŞI BIRAKIYORUZ.
-    // Gelen tüm otelleri doğrudan 'filtered' dizisine atıyoruz.
-    const filtered = hotels; 
-    
-    // Önceki filtreleme kodunun tamamı artık kullanılmıyor:
-    /*
-    const filtered = hotels.filter(hotel => {
-      const priceStr = hotel.priceForDisplay || '';
-      if (minPrice > 0 || maxPrice < Infinity) {
-        if (!priceStr.match(/\d/)) return false;
-        const price = parseInt(priceStr.replace(/[^\d]/g, ''));
-        if (price < parseInt(minPrice) || price > parseInt(maxPrice)) {
-            return false;
-        }
-      }
-      return true;
-    });
-    */
+    const hotelsWithConvertedPricesFromApi =
+      processAndConvertPrices(hotelsRawFromApi);
+    const filteredHotelsFromApi = applyFilters(
+      hotelsWithConvertedPricesFromApi
+    );
 
-    console.log(`[DEBUG] Filtreleme sonrası "${location}" için ${filtered.length} adet otel bulundu.`);
-    
-    // Kullanıcıya filtrelenmemiş, ham listeyi gönderiyoruz.
-    res.status(200).json({ data: filtered });
-
+    res.status(200).json({ data: filteredHotelsFromApi });
   } catch (error) {
-    console.error('Hotel API hatası:', error.message);
+    console.error("Hotel API hatası:", error.message);
     if (error.response) {
-      console.error('API error details:', error.response.data);
-      res.status(error.response.status).json({ message: 'Otel verisi alınamadı', error: error.response.data });
+      console.error("API error details:", error.response.data);
+      res
+        .status(error.response.status)
+        .json({
+          message: "Harici API hatası veya limit dolu.",
+          error: error.response.data,
+        });
     } else {
-      res.status(500).json({ message: 'Sunucu hatası', error: error.message });
+      res
+        .status(500)
+        .json({
+          message: "Sunucu tarafında kritik bir hata oluştu.",
+          error: error.toString(),
+        });
     }
   }
 };
