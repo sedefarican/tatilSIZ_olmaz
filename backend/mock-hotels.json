@@ -1,0 +1,51 @@
+{
+  "data": {
+    "data": [
+      {
+        "id": "23731411",
+        "title": "Crowne Plaza Ankara By IHG",
+        "badge": { "type": "TRAVELLER_CHOICE" },
+        "bubbleRating": { "count": "(70)", "rating": 4.8 },
+        "priceForDisplay": "$161",
+        "cardPhotos": [{ "sizes": { "urlTemplate": "https://media.timeout.com/images/105881439/750/422/image.jpg" }}],
+        "mapWidget": { "location": { "latLong": { "latitude": 39.8973, "longitude": 32.7989 } } }
+      },
+      {
+        "id": "308155",
+        "title": "Radisson Blu Hotel, Ankara",
+        "badge": null,
+        "bubbleRating": { "count": "(1,543)", "rating": 4.4 },
+        "priceForDisplay": "$110",
+        "cardPhotos": [{ "sizes": { "urlTemplate": "https://www.hotel-board.com/images/hotels/be/radisson-blu-hotel-ankara-4.jpg" }}],
+        "mapWidget": { "location": { "latLong": { "latitude": 39.9392, "longitude": 32.8532 } } }
+      },
+      {
+        "id": "550755",
+        "title": "Occidental Ankara",
+        "badge": null,
+        "bubbleRating": { "count": "(604)", "rating": 4.5 },
+        "priceForDisplay": "$95",
+        "cardPhotos": [{ "sizes": { "urlTemplate": "https://www.barcelo.com/guia-turismo/wp-content/uploads/2022/10/fachada-occidental-ankara.jpg" }}],
+        "mapWidget": { "location": { "latLong": { "latitude": 39.9079, "longitude": 32.8582 } } }
+      },
+      {
+        "id": "306232",
+        "title": "Divan Cukurhan",
+        "badge": { "type": "TRAVELLER_CHOICE" },
+        "bubbleRating": { "count": "(781)", "rating": 5.0 },
+        "priceForDisplay": "$250",
+        "cardPhotos": [{ "sizes": { "urlTemplate": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/33626248.jpg?k=1593c6f494958f6918d227f4c7285a11c8282b950e791f42a537d4036e655074&o=&hp=1" }}],
+        "mapWidget": { "location": { "latLong": { "latitude": 39.9416, "longitude": 32.8617 } } }
+      },
+      {
+        "id": "2497645",
+        "title": "Wyndham Ankara",
+        "badge": null,
+        "bubbleRating": { "count": "(738)", "rating": 4.5 },
+        "priceForDisplay": "$180",
+        "cardPhotos": [{ "sizes": { "urlTemplate": "https://www.wyndhamankara.com/images/wyndham-ankara.jpg" }}],
+        "mapWidget": { "location": { "latLong": { "latitude": 39.8953, "longitude": 32.7909 } } }
+      }
+    ]
+  }
+}
