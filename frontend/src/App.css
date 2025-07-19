@@ -1151,3 +1151,19 @@ lang-button:hover {
 main.main-content {
   min-height: calc(100vh - 100px); 
 }
+.hotel-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.hotel-card-link:hover {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.hotel-card-container {
+    display: flex;
+    gap: 12px;
+}

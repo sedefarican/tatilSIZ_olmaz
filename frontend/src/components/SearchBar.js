@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
-import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import '../App.css';
+import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import GuestSelector from './GuestSelector';
 
-export default function SearchBar() {
+export default function SearchBar({ initialValues = {} }) {
   const { t } = useTranslation();
-  const [hotel, setHotel] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-
   const navigate = useNavigate();
+
+  // State'ler, dışarıdan gelen başlangıç değerlerini veya boş string'i kullanır
+  const [hotel, setHotel] = useState(initialValues.location || '');
+  const [checkIn, setCheckIn] = useState(initialValues.checkIn || '');
+  const [checkOut, setCheckOut] = useState(initialValues.checkOut || '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Tarihlerin boş gitmesini engellemek için son bir kontrol
+    const finalCheckIn = checkIn || new Date().toISOString().slice(0, 10);
+    const finalCheckOut = checkOut || (() => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      return tomorrow.toISOString().slice(0, 10);
+    })();
+
+    // Veriyi ResultPage'e state olarak gönder
     navigate('/results', {
       state: {
-        hotel,
-        checkIn,
-        checkOut,
+        hotel: hotel || 'Antalya', // Şehir boşsa Antalya'ya git
+        checkIn: finalCheckIn,
+        checkOut: finalCheckOut,
       },
     });
   };
@@ -70,13 +79,8 @@ export default function SearchBar() {
           </div>
         </div>
 
-        {/* Misafir */}
         <GuestSelector />
-
-        {/* Ara butonu */}
-        <button className="search-button" type="submit">
-          {t('search.searchButton')}
-        </button>
+        <button className="search-button" type="submit">{t('search.searchButton')}</button>
       </div>
     </form>
   );
