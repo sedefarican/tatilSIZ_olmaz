@@ -4,9 +4,9 @@ Docker: Kullanıldı.
 
 REST API: Kullanıldı.
 
-Redis:Kullanıldıı.
+Redis:Kullanıldı.
 
-RabbitMQ: Kullanılmaddı.
+RabbitMQ: Kullanılmadı.
 
 CI/CD: Kullanıldı.
 
