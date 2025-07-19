@@ -6,4 +6,4 @@ RUN npm install
 RUN apt-get update && apt-get install -y netcat-traditional iputils-ping
 COPY . .
 EXPOSE 5000
-CMD ["node", "server.js"]
+CMD node server.js

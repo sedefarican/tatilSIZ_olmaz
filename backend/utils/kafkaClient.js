@@ -25,21 +25,17 @@ const connectProducer = async () => {
 
     for (let i = 0; i < MAX_RETRIES; i++) {
         try {
-            // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
             console.log(`Kafka Producer'a bağlanmaya çalışılıyor... (Deneme ${i + 1}/${MAX_RETRIES})`);
             await producer.connect();
             console.log('✅ Kafka Producer’a başarıyla bağlanıldı');
             return producer;
         } catch (error) {
-            // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
             console.error(`❌ Kafka Producer bağlanırken hata oluştu (Deneme ${i + 1}):`, error.message);
             if (i < MAX_RETRIES - 1) {
-                // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
                 console.log(`Tekrar denemeden önce ${RETRY_DELAY_MS / 1000} saniye bekleniyor...`);
                 await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
             } else {
                 // Maksimum deneme sayısına ulaşıldıysa hatayı fırlat
-                // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
                 throw new Error(`Kafka Producer bağlanamadı, maksimum deneme sayısına ulaşıldı: ${error.message}`);
             }
         }
