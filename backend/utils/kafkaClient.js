@@ -1,69 +1,73 @@
-// /utils/kafkaClient.js
-
 const { Kafka } = require('kafkajs');
 
-// 1. Kafka client'ını SADECE BİR KERE oluştur.
-//    Broker adresi doğru: 'kafka:9092'
-const kafka = new Kafka({
-  clientId: 'tatilsiz-backend-app', // Uygulamana özel bir isim ver
-  brokers: ['kafka:9092']
-});
+let producer = null;
 
-// 2. Producer'ı SADECE BİR KERE oluştur.
-const producer = kafka.producer();
-let isConnected = false;
-
-// 3. Bağlantıyı yönetecek fonksiyonları oluştur.
 const connectProducer = async () => {
-  if (isConnected) {
-    console.log('Kafka Producer zaten bağlı.');
-    return;
-  }
-  try {
-    console.log('Kafka Producer bağlanıyor...');
-    await producer.connect();
-    isConnected = true;
-    console.log('Kafka Producer başarıyla bağlandı.');
-  } catch (error) {
-    console.error('Kafka Producer bağlanırken hata oluştu:', error);
-    // Hata durumunda uygulamayı kapatabilir veya yeniden deneme mekanizması kurabilirsin.
-    process.exit(1); 
-  }
+    if (producer) {
+        console.log('Kafka Producer zaten bağlı.');
+        return producer;
+    }
+
+    const kafka = new Kafka({
+        clientId: 'tatilsiz-backend-app',
+        brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
+        // KafkaJS bağlantı zaman aşımlarını artır
+        connectionTimeout: 30000, // 30 saniye
+        requestTimeout: 60000,    // 60 saniye
+        // Eğer KafkaJS v2.0.0 uyarısını susturmak istiyorsanız:
+        // createPartitioner: Partitioners.LegacyPartitioner, // Eğer eski bölümleme davranışını istiyorsanız
+    });
+
+    producer = kafka.producer();
+
+    const MAX_RETRIES = 15; // Maksimum deneme sayısı artırıldı
+    const RETRY_DELAY_MS = 5000; // Her deneme arasında 5 saniye bekle
+
+    for (let i = 0; i < MAX_RETRIES; i++) {
+        try {
+            // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
+            console.log(`Kafka Producer'a bağlanmaya çalışılıyor... (Deneme ${i + 1}/${MAX_RETRIES})`);
+            await producer.connect();
+            console.log('✅ Kafka Producer’a başarıyla bağlanıldı');
+            return producer;
+        } catch (error) {
+            // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
+            console.error(`❌ Kafka Producer bağlanırken hata oluştu (Deneme ${i + 1}):`, error.message);
+            if (i < MAX_RETRIES - 1) {
+                // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
+                console.log(`Tekrar denemeden önce ${RETRY_DELAY_MS / 1000} saniye bekleniyor...`);
+                await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
+            } else {
+                // Maksimum deneme sayısına ulaşıldıysa hatayı fırlat
+                // Hata burada: Tek tırnak yerine ters tırnak kullanılmalıydı
+                throw new Error(`Kafka Producer bağlanamadı, maksimum deneme sayısına ulaşıldı: ${error.message}`);
+            }
+        }
+    }
 };
 
 const disconnectProducer = async () => {
-  if (!isConnected) {
-    return;
-  }
-  try {
-    console.log('Kafka Producer bağlantısı kesiliyor...');
-    await producer.disconnect();
-    isConnected = false;
-    console.log('Kafka Producer bağlantısı başarıyla kesildi.');
-  } catch (error) {
-    console.error('Kafka Producer bağlantısı kesilirken hata oluştu:', error);
-  }
+    if (producer) {
+        console.log('Kafka Producer bağlantısı kesiliyor...');
+        await producer.disconnect();
+        console.log('Kafka Producer bağlantısı kesildi.');
+        producer = null;
+    }
 };
 
-// 4. Dışa aktaracağımız asıl fonksiyon: Sadece mesaj gönderir.
-const sendMessage = async (topic, message) => {
-  if (!isConnected) {
-    // Bu, uygulamanın başlangıcında connectProducer'ın çağrıldığından emin olmamız gerektiğini gösterir.
-    throw new Error('Kafka Producer bağlı değil. Mesaj gönderilemedi.');
-  }
-  try {
+const sendMessage = async (topic, messages) => {
+    if (!producer) {
+        console.error('Kafka Producer bağlı değil, mesaj gönderilemiyor.');
+        return;
+    }
     await producer.send({
-      topic,
-      messages: [{ value: JSON.stringify(message) }],
+        topic,
+        messages,
     });
-  } catch (error) {
-    console.error(`Mesaj gönderilirken hata oluştu (topic: ${topic}):`, error);
-  }
 };
 
-// Modülden producer'ı, bağlantı fonksiyonlarını ve mesaj gönderme fonksiyonunu dışa aktar.
 module.exports = {
-  connectProducer,
-  disconnectProducer,
-  sendMessage,
+    connectProducer,
+    disconnectProducer,
+    sendMessage,
 };
