@@ -1,16 +1,13 @@
-// hotelController.js DOSYASININ SON VE EKSİKSİZ KODU
 
-const axios = require("axios");
 require("dotenv").config();
+const axios = require("axios");
 const { getRatesLogic } = require("./currencyController");
 const mockDataApiResponse = require("../mock-hotels.json");
 
-// Bu değişkeni değiştirmene gerek yok, docker-compose.yml'den ayarlanıyor.
 const IS_DEV_MODE = process.env.NODE_ENV === "development";
 
 const getHotels = async (req, res) => {
   try {
-    // 1. İster dev, ister gerçek mod olsun, tüm parametreleri ve kurları baştan alıyoruz.
     let {
       minPrice = 50,
       maxPrice = 50000,
@@ -59,7 +56,7 @@ const getHotels = async (req, res) => {
     };
 
     // 3. Fiyat aralığına göre filtreleyen yardımcı fonksiyon
-    const applyFilters = (hotels) => {
+    const applyFilters = (hotels) => {  
       return hotels.filter((hotel) => {
         // Fiyatı olmayanları, bir fiyat filtresi aktifse gösterme.
         if (hotel.priceValue === 0 && (minPrice > 0 || maxPrice < 50000)) {
