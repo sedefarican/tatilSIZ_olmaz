@@ -2,10 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const Redis = require('ioredis');
 
-// Kafka istemci modülünü içeri aktar
-// Bu dosyanın bir üst dizindeki 'utils' klasöründe olduğunu varsayıyorum.
-// Yolu kendi projenize göre güncelleyin.
 const { connectProducer, disconnectProducer } = require('./utils/kafkaClient');
 
 // Route dosyalarını içeri aktar
@@ -19,10 +17,11 @@ dotenv.config();
 
 const app = express();
 
+// Redis istemcisini global olarak tanımlayın
+let redisClient;
+
 // Middleware'ler
-// CORS: Çapraz kaynak isteklerine izin verir.
 app.use(cors());
-// express.json(): Gelen JSON istek gövdelerini ayrıştırır.
 app.use(express.json());
 
 // Route'ları tanımla
@@ -36,63 +35,64 @@ app.get('/', (req, res) => {
     res.send('Backend sunucu çalışıyor');
 });
 
-// Tüm başlatma işlemlerini (DB, Kafka, Sunucu) asenkron bir fonksiyona taşı
+// Tüm başlatma işlemlerini (DB, Kafka, Redis, Sunucu) asenkron bir fonksiyona taşı
 const startServer = async () => {
     try {
         // A. Sunucu dinlemeye başlamadan ÖNCE veritabanına bağlan.
         console.log('MongoDB\'ye bağlanılıyor...');
-        await mongoose.connect(process.env.MONGO_URI, {
-            // Mongoose v6 ve üzeri için useNewUrlParser ve useUnifiedTopology seçenekleri artık varsayılan olarak true'dur
-            // ve belirtilmelerine gerek yoktur. Ancak eski versiyonlar için uyumluluk amacıyla bırakılabilir.
-            // useNewUrlParser: true,
-            // useUnifiedTopology: true
-        });
+        await mongoose.connect(process.env.MONGO_URI);
         console.log('✅ MongoDB’ye başarıyla bağlanıldı');
 
-        // B. Kafka Producer'a bağlan. Bağlantı başarılı/başarısız mesajları 'kafkaClient' içinde yönetiliyor.
-        // Not: KafkaJS v2.0.0'dan sonra varsayılan bölümleyici (partitioner) değişti.
-        // Eğer önceki sürümlerdeki bölümleme davranışını korumak isterseniz,
-        // Kafka producer'ı oluştururken `createPartitioner: Partitioners.LegacyPartitioner` seçeneğini kullanmanız gerekebilir.
-        // Bu uyarıyı susturmak için ortam değişkeni olarak `KAFKAJS_NO_PARTITIONER_WARNING=1` ayarlayabilirsiniz.
+        // B. Redis'e bağlan
+        console.log('Redis\'e bağlanılıyor...');
+        redisClient = new Redis(process.env.REDIS_URI || 'redis://localhost:6379'); 
+        
+        redisClient.on('connect', () => {
+            console.log('✅ Redis’e başarıyla bağlanıldı');
+        });
+
+        redisClient.on('error', (err) => {
+            console.error('❌ Redis bağlantı hatası:', err);
+        });
+        console.log('Redis event listenerlar kuruldu. (Adım 3)');
+
+        // C. Kafka Producer'a bağlan.
         await connectProducer();
 
-        // C. Tüm bağlantılar başarılı olduktan SONRA sunucuyu dinlemeye başla.
-        const port = process.env.PORT || 5000;
+        // D. Tüm bağlantılar başarılı olduktan SONRA sunucuyu dinlemeye başla.
+        // PORT'u doğrudan 5000 olarak sabitledik.
+        const port = 5000; 
         const server = app.listen(port, () => {
             console.log(`🚀 Backend sunucu ${port} portunda çalışıyor`);
         });
 
         // GRACEFUL SHUTDOWN (DÜZGÜN KAPATMA) İŞLEMİNİ EKLE
-        // Uygulama kapatma sinyallerini (örneğin Docker'dan SIGTERM, Ctrl+C'den SIGINT) yakala.
         const signals = ['SIGINT', 'SIGTERM'];
         signals.forEach((signal) => {
             process.on(signal, async () => {
                 console.log(`\n${signal} sinyali alındı. Kapatma işlemi başlıyor...`);
 
-                // 1. Önce Kafka bağlantısını düzgünce kes.
                 await disconnectProducer();
                 console.log('Kafka Producer bağlantısı kapatıldı.');
                 
-                // 2. Sonra HTTP sunucusunu kapat (yeni istek almayı durdur, mevcut isteklerin bitmesini bekle).
+                if (redisClient) {
+                    await redisClient.quit();
+                    console.log('Redis bağlantısı kapatıldı.');
+                }
+                
                 server.close(async () => {
                     console.log('HTTP sunucusu kapatıldı.');
-                    
-                    // 3. Son olarak veritabanı bağlantısını kes ve işlemi sonlandır.
-                    // 'false' parametresi, bağlantı kesilirken bekleyen işlemleri zorla kapatmaz.
                     await mongoose.connection.close(false);
                     console.log('MongoDB bağlantısı kapatıldı.');
-                    process.exit(0); // Başarılı kapatma ile çıkış
+                    process.exit(0);
                 });
             });
         });
 
     } catch (error) {
-        // Başlangıç sırasında kritik bir hata olursa (örneğin DB'ye veya Kafka'ya bağlanamazsa)
-        // sunucuyu hiç başlatma ve hatayı göstererek işlemi sonlandır.
         console.error('❌ Sunucu başlatılırken kritik bir hata oluştu:', error);
-        process.exit(1); // Hata ile çıkış
+        process.exit(1);
     }
 };
 
-// Başlatma fonksiyonunu çağır
 startServer();
