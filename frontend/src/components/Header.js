@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CurrencyContext } from '../context/CurrencyContext';
+import axios from 'axios'; // <-- BU SATIRI EKLEYİN!
 
 export default function Header() {
   const { t, i18n } = useTranslation();
@@ -29,19 +30,41 @@ export default function Header() {
     setShowLogoutConfirm(false);
   };
 
-  const confirmLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('token');
-    setShowLogoutConfirm(false);
-    setDropdownOpen(false);
-    setLogoutSuccess(true);
-    setIsLoggedIn(false);
+  // BU FONKSİYONU GÜNCELLEYİN
+  const confirmLogout = async () => { // async anahtar kelimesini ekleyin
+    const token = localStorage.getItem('token'); // Token'ı al
 
-    setTimeout(() => {
-      setLogoutSuccess(false);
-      navigate('/login');
-    }, 2000);
+    try {
+        if (token) {
+            await axios.post('http://localhost:5000/api/auth/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${token}` // Backend'e token'ı gönder
+                }
+            });
+            console.log('Frontend: Logout API çağrısı başarılı.');
+        } else {
+            console.log('Frontend: Token bulunamadı, API çağrısı atlandı.');
+        }
+    } catch (error) {
+        // Hata durumunda bile frontend tarafındaki temizliği yapmaya devam et
+        console.error('Frontend: Logout API çağrısında hata oluştu:', error);
+        // Hata durumunda kullanıcıya bilgi verebilirsiniz (opsiyonel)
+        // alert('Çıkış yaparken bir hata oluştu: ' + (error.response?.data?.message || error.message));
+    } finally {
+        // API isteği başarılı olsun ya da olmasın, frontend tarafındaki oturum bilgilerini temizle
+        localStorage.removeItem('user');
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('token');
+        setShowLogoutConfirm(false);
+        setDropdownOpen(false);
+        setLogoutSuccess(true);
+        setIsLoggedIn(false);
+
+        setTimeout(() => {
+            setLogoutSuccess(false);
+            navigate('/login');
+        }, 2000);
+    }
   };
 
   const cancelLogout = () => setShowLogoutConfirm(false);

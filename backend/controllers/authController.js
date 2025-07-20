@@ -97,43 +97,51 @@ const login = async (req, res) => {
 // Kullanıcı çıkış işlemi (Logout)
 const logout = async (req, res) => {
     const authHeader = req.headers.authorization;
+    console.log('Logout isteği alındı. Auth Header:', authHeader); // YENİ LOG
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        console.log('Token bulunamadı veya formatı hatalı.'); // YENİ LOG
         return res.status(400).json({ message: 'Token bulunamadı veya formatı hatalı.' });
     }
 
     const token = authHeader.split(' ')[1];
+    console.log('Ayıklanan Token:', token); // YENİ LOG
+    console.log('JWT SECRET KULLANILIYOR:', process.env.JWT_SECRET ? 'Ayarlı' : 'Ayarlı değil!'); // YENİ LOG
 
     try {
         // Token'ı doğrula ve süresini al
-        // Bu adım, token'ın gerçekten geçerli bir JWT olup olmadığını ve süresini kontrol eder.
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('Token başarıyla doğrulandı. Decoded:', decodedToken); // YENİ LOG
+
         // Kalan geçerlilik süresi (saniye cinsinden)
         const expiresIn = decodedToken.exp - Math.floor(Date.now() / 1000);
+        console.log('Kalan geçerlilik süresi (saniye):', expiresIn); // YENİ LOG
 
         // Token'ı Redis kara listesine ekle
-        // 'blacklist:TOKEN' anahtarıyla, token'ın kalan geçerlilik süresi kadar Redis'te tutulur.
-        // Bu süre sonunda Redis'ten otomatik olarak silinir.
-        await redisClient.set(`blacklist:${token}`, 'true', 'EX', expiresIn > 0 ? expiresIn : 1); // Süre 0 veya negatifse en az 1 saniye tut
+        console.log(`Redis'e token ekleniyor: blacklist:${token.substring(0, 10)}... (expire: ${expiresIn}s)`); // YENİ LOG
+        await redisClient.set(`blacklist:${token}`, 'true', 'EX', expiresIn > 0 ? expiresIn : 1); 
+        console.log('Token Redis kara listesine başarıyla eklendi.'); // YENİ LOG
 
         // Express Session kullanılıyorsa oturumu yok et
-        // Bu, oturum çerezini ve sunucu tarafındaki oturum verilerini temizler.
+        // Buradaki req.session kontrolü, Express-Session middleware'ının kullanılıp kullanılmadığına bağlıdır.
+        // Frontend tarafından JWT ile kimlik doğrulama yapılıyorsa bu kısım çalışmayabilir.
         if (req.session) {
+            console.log('Express session destroy ediliyor.'); // YENİ LOG
             req.session.destroy((err) => {
                 if (err) {
                     console.error('Oturum yok edilirken hata:', err);
                     return res.status(500).json({ message: 'Oturum kapatılırken sunucu hatası.' });
                 }
-                // Oturum çerezini temizle (server.js'deki 'name' ile eşleşmeli)
-                res.clearCookie('trivagoSessionId');
+                res.clearCookie('trivagoSessionId'); // Eğer session cookie kullanılıyorsa
                 res.status(200).json({ message: 'Başarıyla çıkış yapıldı.' });
             });
         } else {
-            // Eğer session middleware kullanılmıyorsa veya req.session yoksa
+            console.log('Express session kullanılmıyor veya yok.'); // YENİ LOG
             res.status(200).json({ message: 'Başarıyla çıkış yapıldı.' });
         }
 
     } catch (error) {
-        console.error('Çıkış yaparken hata:', error);
+        console.error('Çıkış yaparken HATA yakalandı:', error.name, error.message); // YENİ LOG
         // Eğer token zaten geçersizse (süresi dolmuş veya hatalı imzalı)
         // yine de başarılı bir çıkış mesajı döndürebiliriz, çünkü kullanıcı zaten oturumda değil.
         if (error.name === 'TokenExpiredError' || error.name === 'JsonWebTokenError') {
