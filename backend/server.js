@@ -45,7 +45,7 @@ const startServer = async () => {
 
         // B. Redis'e bağlan
         console.log('Redis\'e bağlanılıyor...');
-        redisClient = new Redis(process.env.REDIS_URI || 'redis://localhost:6379'); 
+        redisClient = new Redis(process.env.REDIS_HOST || 'redis://localhost:6379'); 
         
         redisClient.on('connect', () => {
             console.log('✅ Redis’e başarıyla bağlanıldı');

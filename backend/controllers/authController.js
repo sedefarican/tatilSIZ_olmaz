@@ -6,11 +6,8 @@ const Redis = require('ioredis'); // Redis istemcisini import et
 // Redis istemcisini başlat
 // Bu, authController'ın Redis'e doğrudan erişmesini sağlar.
 // Ortam değişkenlerini .env dosyasından alacaktır.
-const redisClient = new Redis({
-    host: process.env.REDIS_HOST || 'redis',
-    port: process.env.REDIS_PORT || 6379,
-    // password: process.env.REDIS_PASSWORD, // Eğer Redis'iniz şifreliyse burayı aktif edin
-});
+const redisClient = new Redis(process.env.REDIS_URI || 'redis://localhost:6379');
+
 
 redisClient.on('error', (err) => {
     console.error('❌ authController Redis bağlantı hatası:', err);

@@ -10,12 +10,11 @@ const connectProducer = async () => {
 
     const kafka = new Kafka({
         clientId: 'tatilsiz-backend-app',
-        brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
+        brokers: [process.env.KAFKA_BROKER || 'kafka:9092'],
         // KafkaJS bağlantı zaman aşımlarını artır
         connectionTimeout: 30000, // 30 saniye
         requestTimeout: 60000,    // 60 saniye
-        // Eğer KafkaJS v2.0.0 uyarısını susturmak istiyorsanız:
-        // createPartitioner: Partitioners.LegacyPartitioner, // Eğer eski bölümleme davranışını istiyorsanız
+        
     });
 
     producer = kafka.producer();
