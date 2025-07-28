@@ -1,89 +1,111 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const Redis = require('ioredis');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import Redis from 'ioredis';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const { connectProducer, disconnectProducer } = require('./utils/kafkaClient');
+import { connectProducer, disconnectProducer } from './utils/kafkaClient.js';
+import authRoutes from './routes/authRoutes.js';
+import favoriteRoutes from './routes/favoriteRoutes.js';
+import hotelRoutes from './routes/hotelRoutes.js';
+import currencyRoutes from './routes/currencyRoutes.js';
 
-// Route dosyalarını içeri aktar
-const authRoutes = require('./routes/authRoutes');
-const favoriteRoutes = require('./routes/favoriteRoutes');
-const hotelRoutes = require('./routes/hotelRoutes');
-const currencyRoutes = require('./routes/currencyRoutes');
-
-// .env dosyasını yükle
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-// Redis istemcisini global olarak tanımlayın
 let redisClient;
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const geminiModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-// Middleware'ler
-app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-// Route'ları tanımla
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Backend sunucusu çalışıyor.', status: 'OK' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use('/api/hotels', hotelRoutes);
 app.use('/api/currency', currencyRoutes);
 
-// Temel test endpoint'i
-app.get('/', (req, res) => {
-    res.send('Backend sunucu çalışıyor');
+app.post('/api/ask-gemini', async (req, res, next) => {
+    const { prompt } = req.body;
+
+    if (!prompt) {
+        return res.status(400).json({ success: false, error: 'Lütfen bir prompt (istek metni) sağlayın.' });
+    }
+
+    try {
+        const result = await geminiModel.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+        res.status(200).json({ success: true, response: text });
+    } catch (error) {
+        console.error('Gemini API Hatası:', error);
+        next(new Error('Gemini API\'den yanıt alınamadı.'));
+    }
 });
 
-// Tüm başlatma işlemlerini (DB, Kafka, Redis, Sunucu) asenkron bir fonksiyona taşı
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Sunucuda beklenmedik bir hata oluştu.';
+    
+    console.error(`[HATA] ${statusCode} - ${message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+    console.error(err.stack);
+
+    res.status(statusCode).json({
+        success: false,
+        error: {
+            message: message,
+        },
+    });
+});
+
 const startServer = async () => {
     try {
-        // A. Sunucu dinlemeye başlamadan ÖNCE veritabanına bağlan.
+
         console.log('MongoDB\'ye bağlanılıyor...');
         await mongoose.connect(process.env.MONGO_URI);
-        console.log('✅ MongoDB’ye başarıyla bağlanıldı');
+        console.log('✅ MongoDB’ye başarıyla bağlanıldı.');
 
-        // B. Redis'e bağlan
         console.log('Redis\'e bağlanılıyor...');
-        redisClient = new Redis(process.env.REDIS_HOST || 'redis://localhost:6379'); 
+        redisClient = new Redis(process.env.REDIS_HOST || 'redis://localhost:6379');
+        redisClient.on('connect', () => console.log('✅ Redis’e başarıyla bağlanıldı.'));
+        redisClient.on('error', (err) => console.error('❌ Redis bağlantı hatası:', err));
         
-        redisClient.on('connect', () => {
-            console.log('✅ Redis’e başarıyla bağlanıldı');
-        });
-
-        redisClient.on('error', (err) => {
-            console.error('❌ Redis bağlantı hatası:', err);
-        });
-        console.log('Redis event listenerlar kuruldu. (Adım 3)');
-
-        // C. Kafka Producer'a bağlan.
+        console.log('Kafka Producer\'a bağlanılıyor...');
         await connectProducer();
+        console.log('✅ Kafka Producer\'a başarıyla bağlanıldı.');
 
-        // D. Tüm bağlantılar başarılı olduktan SONRA sunucuyu dinlemeye başla.
-        // PORT'u doğrudan 5000 olarak sabitledik.
-        const port = 5000; 
-        const server = app.listen(port, () => {
-            console.log(`🚀 Backend sunucu ${port} portunda çalışıyor`);
+        const server = app.listen(PORT, () => {
+            console.log(`\n🚀 Backend sunucusu ${PORT} portunda çalışıyor`);
         });
 
-        // GRACEFUL SHUTDOWN (DÜZGÜN KAPATMA) İŞLEMİNİ EKLE
         const signals = ['SIGINT', 'SIGTERM'];
         signals.forEach((signal) => {
             process.on(signal, async () => {
                 console.log(`\n${signal} sinyali alındı. Kapatma işlemi başlıyor...`);
 
-                await disconnectProducer();
-                console.log('Kafka Producer bağlantısı kapatıldı.');
-                
-                if (redisClient) {
-                    await redisClient.quit();
-                    console.log('Redis bağlantısı kapatıldı.');
-                }
-                
                 server.close(async () => {
                     console.log('HTTP sunucusu kapatıldı.');
+
+                    await disconnectProducer();
+                    console.log('Kafka Producer bağlantısı kapatıldı.');
+                    
+                    if (redisClient) {
+                        await redisClient.quit();
+                        console.log('Redis bağlantısı kapatıldı.');
+                    }
+                    
                     await mongoose.connection.close(false);
                     console.log('MongoDB bağlantısı kapatıldı.');
+                    
+                    console.log('Tüm bağlantılar kapatıldı. Uygulama sonlandırılıyor.');
                     process.exit(0);
                 });
             });

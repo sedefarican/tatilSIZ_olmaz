@@ -1,9 +1,7 @@
-// MapView.js DOSYASININ GERÇEK VERİYLE ÇALIŞAN, TAM VE EKSİKSİZ HALİ
-
 import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import "leaflet/dist/leaflet.css"; //bu leafleat ikonları için gerekli
 
 // Leaflet ikon problemini çözen standart kod
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,7 +11,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-// EN ÇOK ARANAN ŞEHİRLERİN KOORDİNATLARINI BURADA SAKLIYORUZ
 const cityCoordinates = {
     "İstanbul": [41.0082, 28.9784],
     "Ankara": [39.9255, 32.8662],
@@ -21,11 +18,14 @@ const cityCoordinates = {
     "Antalya": [36.8969, 30.7133],
     "Bursa": [40.1885, 29.0634],
     "Adana": [37.0000, 35.3213],
-    "Muğla": [37.2154, 28.3636]
-    // İhtiyaca göre diğer şehirler kolayca eklenebilir
+    "Muğla": [37.2154, 28.3636],
+    "Adana": [36.98542, 35.32502],
+    "Balıkesir": [39.644878, 27.885361],
+    "Bolu": [40.732006, 31.607052],
+    "Denizli":[37.783026, 29.096246],
+    "Erzurum":[39.905994, 41.273784]
 };
 
-// Haritayı, seçilen yeni şehrin merkezine animasyonla kaydıran yardımcı component
 function MapFocusController({ city }) {
   const map = useMap();
   useEffect(() => {
@@ -38,9 +38,7 @@ function MapFocusController({ city }) {
   return null;
 }
 
-// MapView component'i artık `hotels` listesi yerine doğrudan `selectedCity` adını alıyor.
 const MapView = ({ selectedCity }) => {
-  // Seçilen şehrin koordinatını listeden bul, bulamazsan Ankara'yı varsay.
   const cityCenter = cityCoordinates[selectedCity] || [39.9255, 32.8662];
 
   return (

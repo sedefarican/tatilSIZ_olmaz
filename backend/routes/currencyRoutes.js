@@ -1,11 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-// --- DOĞRU DEĞİŞKENİ İMPORT EDİYORUZ ---
-// currencyController'dan gelen paketten sadece 'getExchangeRates' fonksiyonunu alıyoruz.
-const { getExchangeRates } = require('../controllers/currencyController');
+import { getExchangeRates } from '../controllers/currencyController.js'; // .js uzantısı önemli
 
-// 5. Satır artık 'getExchangeRates' fonksiyonunu bulabildiği için sunucu çökmeyecek.
 router.get('/rates', getExchangeRates);
 
-module.exports = router;
+export default router;

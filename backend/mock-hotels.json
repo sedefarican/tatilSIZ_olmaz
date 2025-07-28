@@ -2,49 +2,1082 @@
   "data": {
     "data": [
       {
-        "id": "23731411",
-        "title": "Crowne Plaza Ankara By IHG",
-        "badge": { "type": "TRAVELLER_CHOICE" },
-        "bubbleRating": { "count": "(70)", "rating": 4.8 },
-        "priceForDisplay": "$161",
-        "cardPhotos": [{ "sizes": { "urlTemplate": "https://media.timeout.com/images/105881439/750/422/image.jpg" }}],
-        "mapWidget": { "location": { "latLong": { "latitude": 39.8973, "longitude": 32.7989 } } }
-      },
-      {
-        "id": "308155",
-        "title": "Radisson Blu Hotel, Ankara",
-        "badge": null,
-        "bubbleRating": { "count": "(1,543)", "rating": 4.4 },
-        "priceForDisplay": "$110",
-        "cardPhotos": [{ "sizes": { "urlTemplate": "https://www.hotel-board.com/images/hotels/be/radisson-blu-hotel-ankara-4.jpg" }}],
-        "mapWidget": { "location": { "latLong": { "latitude": 39.9392, "longitude": 32.8532 } } }
-      },
-      {
-        "id": "550755",
-        "title": "Occidental Ankara",
-        "badge": null,
-        "bubbleRating": { "count": "(604)", "rating": 4.5 },
-        "priceForDisplay": "$95",
-        "cardPhotos": [{ "sizes": { "urlTemplate": "https://www.barcelo.com/guia-turismo/wp-content/uploads/2022/10/fachada-occidental-ankara.jpg" }}],
-        "mapWidget": { "location": { "latLong": { "latitude": 39.9079, "longitude": 32.8582 } } }
-      },
-      {
-        "id": "306232",
-        "title": "Divan Cukurhan",
-        "badge": { "type": "TRAVELLER_CHOICE" },
-        "bubbleRating": { "count": "(781)", "rating": 5.0 },
-        "priceForDisplay": "$250",
-        "cardPhotos": [{ "sizes": { "urlTemplate": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/33626248.jpg?k=1593c6f494958f6918d227f4c7285a11c8282b950e791f42a537d4036e655074&o=&hp=1" }}],
-        "mapWidget": { "location": { "latLong": { "latitude": 39.9416, "longitude": 32.8617 } } }
-      },
-      {
-        "id": "2497645",
-        "title": "Wyndham Ankara",
-        "badge": null,
-        "bubbleRating": { "count": "(738)", "rating": 4.5 },
+        "id": "1",
+        "title": "Hilton Ankara",
+        "city": "Ankara",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/e8/37/10/hotel-exterior.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.2,
+          "count": "(850)"
+        },
         "priceForDisplay": "$180",
-        "cardPhotos": [{ "sizes": { "urlTemplate": "https://www.wyndhamankara.com/images/wyndham-ankara.jpg" }}],
-        "mapWidget": { "location": { "latLong": { "latitude": 39.8953, "longitude": 32.7909 } } }
+        "latitude": 39.9142,
+        "longitude": 32.8554,
+        "features": ["wifi", "havuz", "spa", "otopark"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "2",
+        "title": "Divan Çukurhan",
+        "city": "Ankara",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/1b/2f/1b/divan-cukurhan.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.7,
+          "count": "(300)"
+        },
+        "priceForDisplay": "$220",
+        "latitude": 39.9405,
+        "longitude": 32.8587,
+        "features": ["wifi", "restoran", "kahvalti"],
+        "paymentOptions": ["kredi"],
+        "type": "butik otel"
+      },
+      {
+        "id": "3",
+        "title": "Swissôtel Büyük Efes İzmir",
+        "city": "İzmir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/91/9f/61/swissotel-buyuk-efes.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.5,
+          "count": "(1200)"
+        },
+        "priceForDisplay": "$200",
+        "latitude": 38.4237,
+        "longitude": 27.1428,
+        "features": ["wifi", "havuz", "spa", "otopark", "restoran"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "4",
+        "title": "Key Hotel",
+        "city": "İzmir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/41/5a/b6/key-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.8,
+          "count": "(450)"
+        },
+        "priceForDisplay": "$280",
+        "latitude": 38.4190,
+        "longitude": 27.1360,
+        "features": ["wifi", "kahvalti", "deniz manzarasi"],
+        "paymentOptions": ["kredi"],
+        "type": "butik otel"
+      },
+      {
+        "id": "5",
+        "title": "Çırağan Palace Kempinski Istanbul",
+        "city": "İstanbul",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/ciragan-palace-kempinski.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.9,
+          "count": "(2500)"
+        },
+        "priceForDisplay": "$500",
+        "latitude": 41.0435,
+        "longitude": 29.0146,
+        "features": ["wifi", "havuz", "spa", "otopark", "restoran", "deniz manzarasi"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "6",
+        "title": "Galata Tower Suites",
+        "city": "İstanbul",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/0e/4f/9b/galata-tower-suites.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.6,
+          "count": "(700)"
+        },
+        "priceForDisplay": "$150",
+        "latitude": 41.0259,
+        "longitude": 28.9744,
+        "features": ["wifi", "mutfak", "sehir manzarasi"],
+        "paymentOptions": ["kredi", "iptal"],
+        "type": "apart"
+      },
+      {
+        "id": "7",
+        "title": "Titanic Deluxe Golf Belek",
+        "city": "Antalya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/titanic-deluxe-golf.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.6,
+          "count": "(1800)"
+        },
+        "priceForDisplay": "$350",
+        "latitude": 36.8525,
+        "longitude": 30.9822,
+        "features": ["wifi", "havuz", "spa", "golf", "her şey dahil"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "8",
+        "title": "Rixos Premium Tekirova",
+        "city": "Antalya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/eb/d4/0b/rixos-premium-tekirova.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.7,
+          "count": "(2100)"
+        },
+        "priceForDisplay": "$400",
+        "latitude": 36.4880,
+        "longitude": 30.5400,
+        "features": ["wifi", "havuz", "spa", "aquapark", "her şey dahil", "deniz kenari"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "9",
+        "title": "Dedeman Konya Hotel Convention Center",
+        "city": "Konya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/f8/4a/01/exterior.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.0,
+          "count": "(600)"
+        },
+        "priceForDisplay": "$120",
+        "latitude": 37.8967,
+        "longitude": 32.5029,
+        "features": ["wifi", "restoran", "otopark"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "10",
+        "title": "Ramada by Wyndham Cappadocia",
+        "city": "Nevşehir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4a/8f/a0/ramada-by-wyndham-cappadocia.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.3,
+          "count": "(750)"
+        },
+        "priceForDisplay": "$160",
+        "latitude": 38.6475,
+        "longitude": 34.8290,
+        "features": ["wifi", "balon turu", "manzara"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "11",
+        "title": "Museum Hotel Cappadocia",
+        "city": "Nevşehir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/0a/3a/0f/museum-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 5.0,
+          "count": "(900)"
+        },
+        "priceForDisplay": "$400",
+        "latitude": 38.6590,
+        "longitude": 34.8350,
+        "features": ["wifi", "spa", "eşsiz deneyim", "manzara"],
+        "paymentOptions": ["kredi"],
+        "type": "butik otel"
+      },
+      {
+        "id": "12",
+        "title": "DoubleTree by Hilton Van",
+        "city": "Van",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/17/7d/5c/doubletree-by-hilton.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.1,
+          "count": "(320)"
+        },
+        "priceForDisplay": "$100",
+        "latitude": 38.4876,
+        "longitude": 43.3448,
+        "features": ["wifi", "restoran", "havuz"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "13",
+        "title": "Trabzon Radisson Blu Hotel",
+        "city": "Trabzon",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/radisson-blu-hotel-trabzon.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.3,
+          "count": "(550)"
+        },
+        "priceForDisplay": "$140",
+        "latitude": 41.0028,
+        "longitude": 39.7345,
+        "features": ["wifi", "deniz manzarasi", "restoran"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "14",
+        "title": "Hotel Suadiye",
+        "city": "İstanbul",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/91/9f/61/hotel-suadiye.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.1,
+          "count": "(620)"
+        },
+        "priceForDisplay": "$170",
+        "latitude": 40.9650,
+        "longitude": 29.0700,
+        "features": ["wifi", "kahvalti", "teras"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "15",
+        "title": "The Stay Warehouse",
+        "city": "İzmir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/0e/4f/9b/the-stay-warehouse.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.7,
+          "count": "(280)"
+        },
+        "priceForDisplay": "$240",
+        "latitude": 38.3990,
+        "longitude": 26.3770,
+        "features": ["wifi", "havuz", "deniz kenari", "butik"],
+        "paymentOptions": ["kredi"],
+        "type": "otel"
+      },
+      {
+        "id": "16",
+        "title": "The Land Of Legends Kingdom Hotel",
+        "city": "Antalya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/the-land-of-legends.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.8,
+          "count": "(3500)"
+        },
+        "priceForDisplay": "$450",
+        "latitude": 36.8790,
+        "longitude": 30.9850,
+        "features": ["wifi", "havuz", "aquapark", "tema parkı", "çocuk dostu"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "17",
+        "title": "Titanic Mardan Palace",
+        "city": "Antalya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/eb/d4/0b/titanic-mardan-palace.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.7,
+          "count": "(2900)"
+        },
+        "priceForDisplay": "$380",
+        "latitude": 36.8795,
+        "longitude": 30.9000,
+        "features": ["wifi", "havuz", "spa", "lüks", "her şey dahil"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "18",
+        "title": "Regnum Carya",
+        "city": "Antalya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/regnum-carya.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.9,
+          "count": "(2200)"
+        },
+        "priceForDisplay": "$550",
+        "latitude": 36.8650,
+        "longitude": 31.0000,
+        "features": ["wifi", "havuz", "golf", "lüks", "her şey dahil", "deniz kenari"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "19",
+        "title": "Conrad Istanbul Bosphorus",
+        "city": "İstanbul",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/1b/2f/1b/conrad-istanbul-bosphorus.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.4,
+          "count": "(1050)"
+        },
+        "priceForDisplay": "$230",
+        "latitude": 41.0480,
+        "longitude": 29.0060,
+        "features": ["wifi", "havuz", "restoran", "boğaz manzarası"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "20",
+        "title": "CVK Park Bosphorus Hotel Istanbul",
+        "city": "İstanbul",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/e9/a1/01/cvk-park-bosphorus-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.5,
+          "count": "(1500)"
+        },
+        "priceForDisplay": "$270",
+        "latitude": 41.0360,
+        "longitude": 28.9900,
+        "features": ["wifi", "havuz", "spa", "boğaz manzarası", "restoran"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "21",
+        "title": "Radisson Blu Hotel, Istanbul Pera",
+        "city": "İstanbul",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/eb/d4/0b/radisson-blu-hotel-istanbul.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.3,
+          "count": "(980)"
+        },
+        "priceForDisplay": "$190",
+        "latitude": 41.0320,
+        "longitude": 28.9740,
+        "features": ["wifi", "restoran", "teras", "şehir manzarası"],
+        "paymentOptions": ["kredi", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "22",
+        "title": "Hotel Raki",
+        "city": "Adana",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/f8/4a/01/hotel-raki.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.9,
+          "count": "(200)"
+        },
+        "priceForDisplay": "$80",
+        "latitude": 37.0000,
+        "longitude": 35.3200,
+        "features": ["wifi", "restoran"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "23",
+        "title": "Adana HiltonSA",
+        "city": "Adana",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/4a/8f/a0/adana-hiltonsa.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.2,
+          "count": "(550)"
+        },
+        "priceForDisplay": "$140",
+        "latitude": 36.9900,
+        "longitude": 35.3300,
+        "features": ["wifi", "havuz", "spor salonu"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "24",
+        "title": "Adıyaman Park Hotel",
+        "city": "Adıyaman",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/1b/2f/1b/adiyaman-park-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.8,
+          "count": "(150)"
+        },
+        "priceForDisplay": "$70",
+        "latitude": 37.7600,
+        "longitude": 38.2700,
+        "features": ["wifi", "otopark"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "25",
+        "title": "Afyon Başaranlar Termal Otel",
+        "city": "Afyonkarahisar",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/91/9f/61/afyon-basaranlar.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.0,
+          "count": "(400)"
+        },
+        "priceForDisplay": "$110",
+        "latitude": 38.7500,
+        "longitude": 30.5200,
+        "features": ["wifi", "termal", "spa", "havuz"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "termal otel"
+      },
+      {
+        "id": "26",
+        "title": "Ağrı Grand Cenas Hotel",
+        "city": "Ağrı",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/41/5a/b6/agri-grand-cenas-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.5,
+          "count": "(80)"
+        },
+        "priceForDisplay": "$60",
+        "latitude": 39.7200,
+        "longitude": 43.0500,
+        "features": ["wifi", "otopark"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "27",
+        "title": "Amasya Grand Vezir Hotel",
+        "city": "Amasya",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/0e/4f/9b/amasya-grand-vezir-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.1,
+          "count": "(250)"
+        },
+        "priceForDisplay": "$90",
+        "latitude": 40.6500,
+        "longitude": 35.8300,
+        "features": ["wifi", "nehiropsi", "restoran"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "28",
+        "title": "Grand Artvin Hotel",
+        "city": "Artvin",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/grand-artvin-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.7,
+          "count": "(90)"
+        },
+        "priceForDisplay": "$75",
+        "latitude": 41.1800,
+        "longitude": 41.8300,
+        "features": ["wifi", "dağ manzarası"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "29",
+        "title": "Palm Wings Beach Resort Kuşadası",
+        "city": "Aydın",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/palm-wings-beach.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.4,
+          "count": "(1100)"
+        },
+        "priceForDisplay": "$250",
+        "latitude": 37.8600,
+        "longitude": 27.2600,
+        "features": ["wifi", "havuz", "deniz kenari", "her şey dahil"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "30",
+        "title": "Ramada by Wyndham Balıkesir",
+        "city": "Balıkesir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/0a/3a/0f/ramada-by-wyndham-balikesir.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.9,
+          "count": "(280)"
+        },
+        "priceForDisplay": "$85",
+        "latitude": 39.6500,
+        "longitude": 27.9000,
+        "features": ["wifi", "otopark"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "31",
+        "title": "Bilecik Grand Hotel",
+        "city": "Bilecik",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0d/17/7d/5c/bilecik-grand-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.6,
+          "count": "(70)"
+        },
+        "priceForDisplay": "$65",
+        "latitude": 40.1400,
+        "longitude": 30.0000,
+        "features": ["wifi"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "32",
+        "title": "Bingöl Grand Hotel",
+        "city": "Bingöl",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/bingol-grand-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.5,
+          "count": "(60)"
+        },
+        "priceForDisplay": "$55",
+        "latitude": 38.8900,
+        "longitude": 40.4900,
+        "features": ["wifi", "restoran"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "33",
+        "title": "Bitlis Nur Hotel",
+        "city": "Bitlis",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/0e/4f/9b/bitlis-nur-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.4,
+          "count": "(50)"
+        },
+        "priceForDisplay": "$50",
+        "latitude": 38.4000,
+        "longitude": 42.1000,
+        "features": ["otopark"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "34",
+        "title": "Bolu Koru Hotel",
+        "city": "Bolu",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/bolu-koru-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.0,
+          "count": "(300)"
+        },
+        "priceForDisplay": "$100",
+        "latitude": 40.7400,
+        "longitude": 31.6200,
+        "features": ["wifi", "doğa", "havuz", "spa"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "35",
+        "title": "Burdur Grand Özeren Otel",
+        "city": "Burdur",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/1b/2f/1b/burdur-grand-ozeren.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.7,
+          "count": "(95)"
+        },
+        "priceForDisplay": "$70",
+        "latitude": 37.7200,
+        "longitude": 30.2900,
+        "features": ["wifi", "otopark"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "36",
+        "title": "Uludağ Grand Yazıcı",
+        "city": "Bursa",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/0a/3a/0f/uludag-grand-yazici.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.2,
+          "count": "(600)"
+        },
+        "priceForDisplay": "$280",
+        "latitude": 40.1000,
+        "longitude": 29.1700,
+        "features": ["wifi", "kayak", "spa", "havuz"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "37",
+        "title": "Troia Tusan Hotel",
+        "city": "Çanakkale",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/f8/4a/01/troia-tusan-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.9,
+          "count": "(350)"
+        },
+        "priceForDisplay": "$110",
+        "latitude": 40.1500,
+        "longitude": 26.4000,
+        "features": ["wifi", "deniz kenari", "tarihi alan yakınlığı"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "38",
+        "title": "Çankırı Karatekin Hotel",
+        "city": "Çankırı",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/cankiri-karatekin.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.5,
+          "count": "(75)"
+        },
+        "priceForDisplay": "$60",
+        "latitude": 40.6000,
+        "longitude": 33.6000,
+        "features": ["wifi"],
+        "paymentOptions": ["pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "39",
+        "title": "Çorum Anitta Hotel",
+        "city": "Çorum",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/corum-anitta-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.1,
+          "count": "(290)"
+        },
+        "priceForDisplay": "$95",
+        "latitude": 40.5500,
+        "longitude": 34.9500,
+        "features": ["wifi", "havuz", "restoran"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "40",
+        "title": "Denizli Dedeman Park",
+        "city": "Denizli",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/1b/2f/1b/denizli-dedeman-park.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.8,
+          "count": "(310)"
+        },
+        "priceForDisplay": "$90",
+        "latitude": 37.7700,
+        "longitude": 29.0900,
+        "features": ["wifi", "otopark", "pamukkale yakın"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "41",
+        "title": "Surmeli Diyarbakır Hotel",
+        "city": "Diyarbakır",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/41/5a/b6/surmeli-diyarbakir.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.9,
+          "count": "(220)"
+        },
+        "priceForDisplay": "$100",
+        "latitude": 37.9200,
+        "longitude": 40.2100,
+        "features": ["wifi", "restoran", "havuz"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "42",
+        "title": "Margi Hotel Edirne",
+        "city": "Edirne",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/0e/4f/9b/margi-hotel-edirne.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.2,
+          "count": "(400)"
+        },
+        "priceForDisplay": "$120",
+        "latitude": 41.6700,
+        "longitude": 26.5500,
+        "features": ["wifi", "spa", "tarihi alan yakınlığı"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "43",
+        "title": "Ramada by Wyndham Elazığ",
+        "city": "Elazığ",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/ramada-by-wyndham-elazig.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.7,
+          "count": "(180)"
+        },
+        "priceForDisplay": "$80",
+        "latitude": 38.6800,
+        "longitude": 39.2200,
+        "features": ["wifi", "otopark"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "44",
+        "title": "Erzincan Hilton Garden Inn",
+        "city": "Erzincan",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/erzincan-hilton-garden.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.0,
+          "count": "(230)"
+        },
+        "priceForDisplay": "$95",
+        "latitude": 39.7500,
+        "longitude": 39.5000,
+        "features": ["wifi", "spor salonu"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "45",
+        "title": "Polat Erzurum Resort Hotel",
+        "city": "Erzurum",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/1b/2f/1b/polat-erzurum-resort.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.3,
+          "count": "(500)"
+        },
+        "priceForDisplay": "$150",
+        "latitude": 39.9000,
+        "longitude": 41.2700,
+        "features": ["wifi", "kayak", "spa", "havuz"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "46",
+        "title": "Dedeman Eskişehir Otel",
+        "city": "Eskişehir",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/41/5a/b6/dedeman-eskisehir.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.0,
+          "count": "(480)"
+        },
+        "priceForDisplay": "$115",
+        "latitude": 39.7700,
+        "longitude": 30.5200,
+        "features": ["wifi", "havuz", "restoran"],
+        "paymentOptions": ["kredi", "pesin", "iptal"],
+        "type": "otel"
+      },
+      {
+        "id": "47",
+        "title": "The Plaza Hotel Gaziantep",
+        "city": "Gaziantep",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/0e/4f/9b/the-plaza-hotel-gaziantep.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 4.1,
+          "count": "(380)"
+        },
+        "priceForDisplay": "$130",
+        "latitude": 37.0600,
+        "longitude": 37.3800,
+        "features": ["wifi", "restoran", "otopark"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "48",
+        "title": "Giresun Ramada by Wyndham",
+        "city": "Giresun",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/42/7e/8e/giresun-ramada.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.9,
+          "count": "(190)"
+        },
+        "priceForDisplay": "$85",
+        "latitude": 40.9200,
+        "longitude": 38.3800,
+        "features": ["wifi", "deniz manzarası"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
+      },
+      {
+        "id": "49",
+        "title": "Gümüşhane Zigana Yaylakent Hotel",
+        "city": "Gümüşhane",
+        "cardPhotos": [
+          {
+            "sizes": {
+              "urlTemplate": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/e9/a1/01/gumushane-zigana-yaylakent-hotel.jpg?w={width}&h={height}&s=1"
+            }
+          }
+        ],
+        "bubbleRating": {
+          "rating": 3.8,
+          "count": "(100)"
+        },
+        "priceForDisplay": "$70",
+        "latitude": 40.7000,
+        "longitude": 39.4000,
+        "features": ["wifi", "doğa", "manzara"],
+        "paymentOptions": ["kredi", "pesin"],
+        "type": "otel"
       }
     ]
   }

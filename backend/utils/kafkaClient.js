@@ -1,8 +1,9 @@
-const { Kafka } = require('kafkajs');
+import { Kafka } from 'kafkajs';
 
 let producer = null;
 
-const connectProducer = async () => {
+// Kafka Producer'a bağlanma 
+export const connectProducer = async () => {
     if (producer) {
         console.log('Kafka Producer zaten bağlı.');
         return producer;
@@ -11,10 +12,8 @@ const connectProducer = async () => {
     const kafka = new Kafka({
         clientId: 'tatilsiz-backend-app',
         brokers: [process.env.KAFKA_BROKER || 'kafka:9092'],
-        // KafkaJS bağlantı zaman aşımlarını artır
         connectionTimeout: 30000, // 30 saniye
         requestTimeout: 60000,    // 60 saniye
-        
     });
 
     producer = kafka.producer();
@@ -34,14 +33,13 @@ const connectProducer = async () => {
                 console.log(`Tekrar denemeden önce ${RETRY_DELAY_MS / 1000} saniye bekleniyor...`);
                 await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
             } else {
-                // Maksimum deneme sayısına ulaşıldıysa hatayı fırlat
                 throw new Error(`Kafka Producer bağlanamadı, maksimum deneme sayısına ulaşıldı: ${error.message}`);
             }
         }
     }
 };
 
-const disconnectProducer = async () => {
+export const disconnectProducer = async () => {
     if (producer) {
         console.log('Kafka Producer bağlantısı kesiliyor...');
         await producer.disconnect();
@@ -50,7 +48,7 @@ const disconnectProducer = async () => {
     }
 };
 
-const sendMessage = async (topic, messages) => {
+export const sendMessage = async (topic, messages) => {
     if (!producer) {
         console.error('Kafka Producer bağlı değil, mesaj gönderilemiyor.');
         return;
@@ -61,8 +59,3 @@ const sendMessage = async (topic, messages) => {
     });
 };
 
-module.exports = {
-    connectProducer,
-    disconnectProducer,
-    sendMessage,
-};

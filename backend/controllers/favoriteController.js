@@ -1,58 +1,41 @@
-// favoriteController.js DOSYASININ YENİ VE TAM İÇERİĞİ
-const Favorite = require('../models/Favorite');
-
-// GET: Kullanıcının favori otellerini getir
-const getFavorites = async (req, res) => {
-  const { userEmail } = req.query;
-  if (!userEmail) {
-    return res.status(400).json({ message: 'Kullanıcı e-postası gerekli.' });
-  }
+export const addFavorite = async (req, res) => {
   try {
-    const favorites = await Favorite.find({ userEmail });
-    res.status(200).json(favorites);
-  } catch (err) {
-    res.status(500).json({ message: 'Sunucu hatası.' });
+    // const { userEmail, hotelId, hotelTitle, price, image } = req.body;
+    // const newFavorite = new Favorite({ userEmail, hotelId, hotelTitle, price, image });
+    // await newFavorite.save();
+    console.log('Favori ekleme isteği alındı:', req.body);
+    res.status(201).json({ message: 'Favori başarıyla eklendi (mock).' });
+  } catch (error) {
+    console.error('Favori eklerken hata oluştu:', error);
+    res.status(500).json({ message: 'Favori eklenirken bir hata oluştu.' });
   }
 };
 
-// POST: Yeni favori ekle
-const addFavorite = async (req, res) => {
-  const { userEmail, hotelId, hotelTitle, price, image } = req.body;
-  if (!userEmail || !hotelId) {
-    return res.status(400).json({ message: 'Eksik veri.' });
-  }
+// Favorileri getirme 
+export const getFavorites = async (req, res) => {
   try {
-    const exists = await Favorite.findOne({ userEmail, hotelId });
-    if (exists) {
-      return res.status(409).json({ message: 'Zaten favorilerde.' });
-    }
-    const newFav = new Favorite({ userEmail, hotelId, hotelTitle, price, image });
-    await newFav.save();
-    // EKLENEN FAVORİYİ GERİ DÖN. Frontend'in state'i güncellemesi için bu daha iyi.
-    res.status(201).json(newFav); 
-  } catch (err) {
-    res.status(500).json({ message: 'Sunucu hatası.' });
+    const { userEmail } = req.query;
+    // const favorites = await Favorite.find({ userEmail });
+    console.log('Favori getirme isteği alındı, userEmail:', userEmail);
+    // Mock veri döndürüyoruz, gerçekte veritabanından çekilmeli
+    res.status(200).json([
+        // { hotelId: "1", hotelTitle: "Hilton Ankara", price: "$180", image: "..." },
+        // { hotelId: "5", hotelTitle: "Çırağan Palace Kempinski Istanbul", price: "$500", image: "..." }
+    ]);
+  } catch (error) {
+    console.error('Favorileri çekerken hata oluştu:', error);
+    res.status(500).json({ message: 'Favoriler çekilirken bir hata oluştu.' });
   }
 };
 
-// DELETE: Favori sil
-const removeFavorite = async (req, res) => {
-  // DEĞİŞİKLİK: hotelId'yi req.params'tan, userEmail'i req.body'den alıyoruz.
-  const { hotelId } = req.params;
-  const { userEmail } = req.body; // Veya bir auth middleware'den alınabilir. Şimdilik body'de kalsın.
-
-  if (!userEmail || !hotelId) {
-    return res.status(400).json({ message: 'Eksik veri.' });
-  }
+// Favori silme fonksiyonu
+export const deleteFavorite = async (req, res) => {
   try {
-    const result = await Favorite.deleteOne({ userEmail, hotelId });
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ message: 'Silinecek favori bulunamadı.' });
-    }
-    res.status(200).json({ message: 'Favoriden silindi.', hotelId });
-  } catch (err) {
-    res.status(500).json({ message: 'Sunucu hatası.' });
+    const { hotelId } = req.params;
+    console.log('Favori silme isteği alındı, hotelId:', hotelId, 'userEmail:', req.body?.userEmail);
+    res.status(200).json({ message: 'Favori başarıyla silindi (mock).' });
+  } catch (error) {
+    console.error('Favori silerken hata oluştu:', error);
+    res.status(500).json({ message: 'Favori silinirken bir hata oluştu.' });
   }
 };
-
-module.exports = { getFavorites, addFavorite, removeFavorite };

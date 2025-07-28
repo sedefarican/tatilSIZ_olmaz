@@ -1,9 +1,7 @@
-// ResultPage.js'NİN FİLTRELERİ GERİ GELMİŞ, SAYISIZ, TAM VE EKSİKSİZ HALİ
-
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
+import axios from "axios"; // Axios'u tekrar ekliyoruz çünkü şimdi bir backend'e istek atacağız
 import MapView from "./MapView";
 import SearchBar from "./SearchBar";
 import { CurrencyContext } from "../context/CurrencyContext";
@@ -37,104 +35,29 @@ export default function ResultPage() {
   const [favoriteIds, setFavoriteIds] = useState(new Set());
 
   const cities = [
-    "Adana",
-    "Adıyaman",
-    "Afyonkarahisar",
-    "Ağrı",
-    "Amasya",
-    "Ankara",
-    "Antalya",
-    "Artvin",
-    "Aydın",
-    "Balıkesir",
-    "Bilecik",
-    "Bingöl",
-    "Bitlis",
-    "Bolu",
-    "Burdur",
-    "Bursa",
-    "Çanakkale",
-    "Çankırı",
-    "Çorum",
-    "Denizli",
-    "Diyarbakır",
-    "Edirne",
-    "Elazığ",
-    "Erzincan",
-    "Erzurum",
-    "Eskişehir",
-    "Gaziantep",
-    "Giresun",
-    "Gümüşhane",
-    "Hakkari",
-    "Hatay",
-    "Isparta",
-    "Mersin",
-    "İstanbul",
-    "İzmir",
-    "Kars",
-    "Kastamonu",
-    "Kayseri",
-    "Kırklareli",
-    "Kırşehir",
-    "Kocaeli",
-    "Konya",
-    "Kütahya",
-    "Malatya",
-    "Manisa",
-    "Kahramanmaraş",
-    "Mardin",
-    "Muğla",
-    "Muş",
-    "Nevşehir",
-    "Niğde",
-    "Ordu",
-    "Rize",
-    "Sakarya",
-    "Samsun",
-    "Siirt",
-    "Sinop",
-    "Sivas",
-    "Tekirdağ",
-    "Tokat",
-    "Trabzon",
-    "Tunceli",
-    "Şanlıurfa",
-    "Uşak",
-    "Van",
-    "Yozgat",
-    "Zonguldak",
-    "Aksaray",
-    "Bayburt",
-    "Karaman",
-    "Kırıkkale",
-    "Batman",
-    "Şırnak",
-    "Bartın",
-    "Ardahan",
-    "Iğdır",
-    "Yalova",
-    "Karabük",
-    "Kilis",
-    "Osmaniye",
-    "Düzce",
+    "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce",
   ];
 
+  // Kullanıcının favorilerini backend'den yükle
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("user"));
-    if (stored?.email) {
-      setUserEmail(stored.email);
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser?.email) {
+      setUserEmail(storedUser.email);
+      // Favorileri backend'den çekiyoruz
       axios
         .get("http://localhost:5000/api/favorites", {
-          params: { userEmail: stored.email },
+          params: { userEmail: storedUser.email },
         })
         .then((res) =>
+          // Backend'den [{hotelId: "1"}, {hotelId: "3"}] gibi bir dizi gelirse
+          // bunu Set'e dönüştürüyoruz
           setFavoriteIds(new Set(res.data.map((fav) => fav.hotelId)))
         )
         .catch((err) => console.error("Favoriler çekilemedi:", err));
     }
   }, []);
 
+  // Otel verilerini backend'den çeken fonksiyon
   const fetchHotels = useCallback(
     async (params) => {
       setLoading(true);
@@ -146,18 +69,21 @@ export default function ResultPage() {
           checkOut: params.checkOut || initialCheckOut,
           lang: i18n.language,
         };
+        // Backend mock API'sine istek atıyoruz
         const res = await axios.get("http://localhost:5000/api/hotels", {
           params: finalParams,
         });
         setHotels(Array.isArray(res.data.data) ? res.data.data : []);
       } catch (err) {
         setHotels([]);
+        console.error("Oteller çekilemedi:", err);
       }
       setLoading(false);
     },
     [currency, initialCheckIn, initialCheckOut, i18n.language]
   );
 
+  // Filtreler veya başlangıç state'i değiştiğinde otelleri tekrar çek
   useEffect(() => {
     const initialSearchParams = {
       location: initialHotel,
@@ -185,6 +111,7 @@ export default function ResultPage() {
     i18n.language,
   ]);
 
+  // Favori ekleme/kaldırma işlemi
   const handleToggleFavorite = async (hotel, isCurrentlyFavorite) => {
     if (!userEmail) {
       alert("Favorilere eklemek için lütfen giriş yapın.");
@@ -194,8 +121,9 @@ export default function ResultPage() {
 
     if (isCurrentlyFavorite) {
       try {
+        // Backend API'sine favori silme isteği gönder
         await axios.delete(`http://localhost:5000/api/favorites/${hotelId}`, {
-          data: { userEmail },
+          data: { userEmail }, // DELETE isteği body'sine userEmail ekliyoruz
         });
         setFavoriteIds((prev) => {
           const newIds = new Set(prev);
@@ -216,6 +144,7 @@ export default function ResultPage() {
             ?.replace("{width}", "100")
             ?.replace("{height}", "100"),
         };
+        // Backend API'sine favori ekleme isteği gönder
         await axios.post("http://localhost:5000/api/favorites", payload);
         setFavoriteIds((prev) => new Set(prev).add(hotelId));
       } catch (err) {
@@ -224,6 +153,7 @@ export default function ResultPage() {
     }
   };
 
+  // Filtrele butonuna basıldığında otelleri tekrar çek
   const handleFilterClick = () => {
     const filterParams = {
       location: selectedCity,
@@ -237,9 +167,11 @@ export default function ResultPage() {
     };
     fetchHotels(filterParams);
   };
+
+  // Fiyat filtresi uygulandığında
   const applyPriceFilter = () => {
     setShowPricePopup(false);
-    handleFilterClick();
+    handleFilterClick(); // Filtreleri uygula
   };
 
   return (
@@ -251,7 +183,7 @@ export default function ResultPage() {
         guests="2 Misafir, 1 Oda"
       />
 
-      {/* --- FİLTRELEME ÇUBUĞU - DOLDURULMUŞ VE TAM HALİ --- */}
+      {/* --- FİLTRELEME ÇUBUĞU --- */}
       <div className="filter-bar">
         <div className="filter-block price-filter-wrapper">
           <label>{t("resultPage.price")}</label>
@@ -394,13 +326,13 @@ export default function ResultPage() {
               const image =
                 hotel.cardPhotos?.[0]?.sizes?.urlTemplate
                   ?.replace("{width}", "200")
-                  .replace("{height}", "200") ||
+                  ?.replace("{height}", "200") ||
                 "https://via.placeholder.com/150";
               const rating = hotel.bubbleRating?.rating?.toFixed(1) ?? "N/A";
               const reviewCount =
                 hotel.bubbleRating?.count?.replace(/\(|\)/g, "") ?? "0";
               const displayPrice = hotel.priceForDisplay || "Fiyat bilgisi yok";
-              const detailsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+              const detailsLink = `http://googleusercontent.com/maps.google.com/3{encodeURIComponent(
                 hotel.title || ""
               )}`;
 

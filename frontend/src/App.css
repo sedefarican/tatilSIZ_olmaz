@@ -1087,7 +1087,7 @@ lang-button:hover {
 .assistant-button {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background-color: white;
   border: none;
   border-radius: 20px;
@@ -1097,18 +1097,19 @@ lang-button:hover {
   color: #333;
   cursor: pointer;
   transition: all 0.3s ease;
-  white-space: nowrap; /* yazı taşmasın */
+  white-space: nowrap; 
+  overflow: 'auto';
 }
 
 .assistant-button:hover {
   background-color: #f0f0f0;
 }
 .footer {
-  background-color: #000;              /* siyah arka plan */
+  background-color: #000;              
   padding: 20px 40px;
   text-align: center;
   font-size: 14px;
-  color: #fff;                         /* beyaz yazı */
+  color: #fff;                      
   margin-top: 40px;
   width: 100%;
 }

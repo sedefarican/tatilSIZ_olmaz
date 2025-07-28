@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+import mongoose from 'mongoose';
 const favoriteSchema = new mongoose.Schema({
   userEmail: { type: String, required: true },
   hotelId: { type: String, required: true },
@@ -10,4 +9,4 @@ const favoriteSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Favorite', favoriteSchema);
+export default mongoose.model('Favorite', favoriteSchema);
